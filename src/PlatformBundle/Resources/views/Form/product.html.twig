@@ -1,0 +1,27 @@
+{% extends "default/index.html.twig" %}
+{% block content %}
+    <center>
+        <div id="container" class="col-md-5">
+
+            <h3>Formulaire d'annonce</h3>
+            <div class="col-md-5">
+
+                {{ form(form) }}
+
+                </div>
+
+            </div>
+        </div>
+    </center>
+    <style>
+        #container {
+            margin-top: 40px;
+            padding: 20px;
+            background-color: white;
+            border-radius: 20px;
+            border-color: black;
+            margin-left: auto;
+            margin-right: auto;
+        }
+    </style>
+{% endblock %}

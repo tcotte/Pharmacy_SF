@@ -1,0 +1,4 @@
+services:
+    app_service.layout_data:
+        class: AppBundle\Service\LayoutDataService
+        arguments: ['@doctrine.orm.entity_manager']
