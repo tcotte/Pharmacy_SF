@@ -6,12 +6,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Response;
 use PlatformBundle\Entity\Product;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
-use Symfony\Component\Form\Extension\Core\Type\NumberType;
-use Symfony\Component\Form\Extension\Core\Type\FormType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\MoneyType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
+use PlatformBundle\Form\ProductType;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @Route("/product")
@@ -22,34 +18,27 @@ class ProductController extends Controller
     /**
      * @Route("/addProduct", name="addProduct")
      */
-    public function addProductAction()
+    public function addProductAction(Request $request)
     {
         // On crée un objet Advert
         $product = new Product();
 
         // On crée le FormBuilder grâce au service form factory
-        $formBuilder = $this->get('form.factory')->createBuilder(FormType::class, $product);
+        $form = $this->get('form.factory')->create(ProductType::class, $product);
 
-        // On ajoute les champs de l'entité que l'on veut à notre formulaire
-        $formBuilder
-            ->add('designation',      TextType::class)
-            ->add('code',     TextType::class)
-            ->add('reference',   TextType::class)
-            ->add('supplier',    TextType::class)
-            ->add('market', TextType::class)
-            ->add('price', MoneyType::class)
-            ->add('cdt', NumberType::class)
-            ->add('save',      SubmitType::class);
-        // Pour l'instant, pas de candidatures, catégories, etc., on les gérera plus tard
+        if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($product);
+            $em->flush();
 
-        // À partir du formBuilder, on génère le formulaire
-        $form = $formBuilder->getForm();
+            $request->getSession()->getFlashBag()->add('success', 'Le produit "' . $product->getDesignation() . '" a bien été enregistré !');
 
-        // On passe la méthode createView() du formulaire à la vue
-        // afin qu'elle puisse afficher le formulaire toute seule
+            return $this->redirectToRoute('app');
+        }
+
         return $this->render('@Platform/Form/product.html.twig', array(
             'listCategory' => $this->get('app_service.layout_data')->getLayoutData(),
-            'form' => $form->createView(),
+            'form' => $form->createView()
         ));
     }
 }

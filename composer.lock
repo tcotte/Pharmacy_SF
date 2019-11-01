@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2277e44fe7b30d2e4eb726dec46bea8b",
+    "content-hash": "b0f1d2ba3f93600dd74a91d35d564bc4",
     "packages": [
         {
             "name": "composer/ca-bundle",
@@ -2110,16 +2110,16 @@
         },
         {
             "name": "symfony/symfony",
-            "version": "v3.4.32",
+            "version": "v3.4.33",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/symfony.git",
-                "reference": "2815d1fa34d417b8b87450667f166edbefff3177"
+                "reference": "47813652695f1345987fd5dfc0df67607e738b31"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/symfony/zipball/2815d1fa34d417b8b87450667f166edbefff3177",
-                "reference": "2815d1fa34d417b8b87450667f166edbefff3177",
+                "url": "https://api.github.com/repos/symfony/symfony/zipball/47813652695f1345987fd5dfc0df67607e738b31",
+                "reference": "47813652695f1345987fd5dfc0df67607e738b31",
                 "shasum": ""
             },
             "require": {
@@ -2261,7 +2261,7 @@
             "keywords": [
                 "framework"
             ],
-            "time": "2019-10-07T14:42:16+00:00"
+            "time": "2019-11-01T09:46:51+00:00"
         },
         {
             "name": "twig/twig",
