@@ -13,9 +13,10 @@ use Doctrine\ORM\Mapping as ORM;
 class Product
 {
 
+
     /**
-     * @ORM\ManyToOne(targetEntity="PlatformBundle\Entity\Category")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\ManyToOne(targetEntity="PlatformBundle\Entity\Category", inversedBy="products",cascade={"persist"})
+     * @ORM\JoinColumn(nullable=true)
      */
     private $category;
 

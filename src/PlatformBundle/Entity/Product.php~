@@ -13,9 +13,10 @@ use Doctrine\ORM\Mapping as ORM;
 class Product
 {
 
+
     /**
-     * @ORM\ManyToOne(targetEntity="PlatformBundle\Entity\Category")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\ManyToOne(targetEntity="PlatformBundle\Entity\Category", inversedBy="products",cascade={"persist"})
+     * @ORM\JoinColumn(nullable=true)
      */
     private $category;
 
@@ -255,5 +256,29 @@ class Product
     public function getCdt()
     {
         return $this->cdt;
+    }
+
+    /**
+     * Set category
+     *
+     * @param \PlatformBundle\Entity\Category $category
+     *
+     * @return Product
+     */
+    public function setCategory(\PlatformBundle\Entity\Category $category)
+    {
+        $this->category = $category;
+
+        return $this;
+    }
+
+    /**
+     * Get category
+     *
+     * @return \PlatformBundle\Entity\Category
+     */
+    public function getCategory()
+    {
+        return $this->category;
     }
 }

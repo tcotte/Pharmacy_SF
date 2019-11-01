@@ -6,7 +6,7 @@
     <center>
         <div id="container" class="col-md-5">
 
-            <h3>Formulaire d'annonce</h3>
+            <h3>Ajout d'un produit</h3>
             <div class="col-md-5">
 
                 {{ form(form) }}
@@ -18,4 +18,7 @@
     </center>
 
 
+{% endblock %}
+{% block javascripts %}
+    <script src="{{ asset('js/form.js') }}"></script>
 {% endblock %}

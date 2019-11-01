@@ -22,6 +22,11 @@ class Category
     private $id;
 
     /**
+     * @ORM\OneToMany(targetEntity="PlatformBundle\Entity\Product", mappedBy="category",cascade={"persist"})
+     */
+    private $products;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255)
@@ -61,5 +66,47 @@ class Category
     public function getName()
     {
         return $this->name;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->products = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add product
+     *
+     * @param \PlatformBundle\Entity\Product $product
+     *
+     * @return Category
+     */
+    public function addProduct(\PlatformBundle\Entity\Product $product)
+    {
+        // $this->products[] = $product;
+        $product->setCategory($this);
+        $this->products->add($product);
+        // return $this;
+    }
+
+    /**
+     * Remove product
+     *
+     * @param \PlatformBundle\Entity\Product $product
+     */
+    public function removeProduct(\PlatformBundle\Entity\Product $product)
+    {
+        $this->products->removeElement($product);
+    }
+
+    /**
+     * Get products
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getProducts()
+    {
+        return $this->products;
     }
 }

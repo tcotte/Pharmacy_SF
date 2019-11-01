@@ -1,0 +1,34 @@
+{% extends "default/index.html.twig" %}
+{% block content %}
+    {% block stylesheets %}
+        <link href="{{ asset('css/form.css') }}" rel="stylesheet"/>
+    {% endblock %}
+    <center>
+        <div id="container" class="col-md-5">
+
+            <h3>Edit formulary</h3>
+            <div class="col-md-5">
+                {%
+                    form_theme form
+                    'bootstrap_4_layout.html.twig'
+                        'jquery.collection.html.twig'%}
+                {{ form_start(form) }}
+                {{ form_row(form) }}
+                {{ form_end(form)}}
+            </div>
+
+        </div>
+
+    </center>
+
+
+{% endblock %}
+{% block javascripts %}
+    <script src="{{ asset('js/jquery.collection.js') }}"></script>
+    <script type="text/javascript">
+        $('.product-collection').collection({
+            allow_duplicate: true
+        });
+    </script>
+
+{% endblock %}
