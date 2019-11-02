@@ -83,20 +83,17 @@ class DefaultController extends Controller
 
         if ($form->isValid()) {
 
-            // remove the relationship between the tag and the Task
             foreach ($originalProducts as $product) {
                 if (false === $category->getProducts()->contains($product)) {
-                    // remove the Task from the Tag
-                    // $product->getCategory()->removeProduct($category);
-
-                    // // // if it was a many-to-one relationship, remove the relationship like this
-                    // $product->setCategory(null);
 
                     $em->persist($product);
-
-                    // $product->remove();
-                    // if you wanted to delete the Tag entirely, you can also do that
                     $em->remove($product);
+
+                    // if ($em->persist($product)) {
+                    //     $request->getSession()->getFlashBag()->add('success', 'Le produit "' . $product->getDesignation() . '" a bien été enregistré !');
+                    // } elseif ($em->remove($product)) {
+                    //     $request->getSession()->getFlashBag()->add('alert', 'Le produit "' . $product->getDesignation() . '" a bien été supprimé !');
+                    // }
                 }
             }
             $em->persist($category);

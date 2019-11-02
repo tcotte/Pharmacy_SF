@@ -603,7 +603,7 @@
                         elements = shiftElementsUp(collection, elements, settings, index);
                         toDelete = elements.last();
                     }
-                    var backup = toDelete.clone({withDataAndEvents: true}).show();
+                    var backup = toDelete.clone({ withDataAndEvents: true }).show();
                     toDelete.remove();
                     if (!trueOrUndefined(settings.after_remove(collection, backup))) {
                         var elementsParent = $(settings.elements_parent_selector);
@@ -999,4 +999,4 @@
     }; // $.fn.collection
 
 })
-(jQuery);
+    (jQuery);
