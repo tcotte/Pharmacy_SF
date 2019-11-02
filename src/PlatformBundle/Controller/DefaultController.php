@@ -17,6 +17,7 @@ use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use PlatformBundle\Repository\ProductRepository;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 
 
 class DefaultController extends Controller
@@ -44,36 +45,43 @@ class DefaultController extends Controller
 
         $command = new Command();
 
-        // On crée le FormBuilder grâce au service form factory
-        // $formBuilder = $this->get('form.factory')->createBuilder(FormType::class, $command);
-        $form = $this->get('form.factory')->create(ProductInCommandType::class, [
-            'category' => $category // valeur a envoyer
-        ]);
-        // On ajoute les champs de l'entité que l'on veut à notre formulaire
-        // $formBuilder
-        //     ->add('products', EntityType::class, array(
-        //         'class' => 'PlatformBundle:Product',
-        //         'choice_label' => 'designation',
-        //         'query_builder' => function (ProductRepository $er) use ($category) {
-        //             return $er->getCategoryOfProduct($category);
-        //             // return $er->createQueryBuilder('a')
-        //             //     ->where('a.category = :category')
-        //             //     ->setParameter('category', $category);
-        //         },
-        //         // 'choices' => $category->getProducts(),
-        //     ))
-        //     ->add('quantity',   IntegerType::class)
-        //     ->add('save',      SubmitType::class);
-        // // Pour l'instant, pas de candidatures, catégories, etc., on les gérera plus tard
+        // $form = $this->get('form.factory')->create(ProductInCommandType::class, [
+        //     'category' => $category // send this data in option
+        // ]);
 
-        // // À partir du formBuilder, on génère le formulaire
-        // $form = $formBuilder->getForm();
+        $formBuilder = $this->get('form.factory')->createBuilder(FormType::class, $command);
+
+        $formBuilder
+            ->add('products', CollectionType::class, [
+                'entry_type'   => ProductInCommandType::class,
+
+                // [
+                //     'category' => $category // send this data in option
+                // ],
+                'entry_options' => ['label' => false],
+                'label'        => false,
+                'allow_add'    => true,
+                'allow_delete' => true,
+                'prototype'    => true,
+                'required'     => false,
+                'by_reference' => false,
+                'attr'         => [
+                    'class' => "command-collection",
+                ],
+            ])
+            ->add('Valider', SubmitType::class)
+            ->getForm();
+        // Pour l'instant, pas de candidatures, catégories, etc., on les gérera plus tard
+
+        // À partir du formBuilder, on génère le formulaire
+        $form = $formBuilder->getForm();
 
 
-
-        return $this->render('@Platform/Default/viewFormulary.html.twig', array(
+        // return $this->render('@Platform/Default/viewFormulary.html.twig', array(
+        return $this->render('@Platform/Form/command.html.twig', array(
             'listCategory' => $this->get('app_service.layout_data')->getLayoutData(),
             'category' => $category,
+            // 'data' => $command,
             'form' => $form->createView()
         ));
     }

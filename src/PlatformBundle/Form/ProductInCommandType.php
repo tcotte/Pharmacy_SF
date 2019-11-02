@@ -12,6 +12,7 @@ use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use PlatformBundle\Repository\ProductRepository;
 
+
 class ProductInCommandType extends AbstractType
 {
     /**
@@ -20,17 +21,21 @@ class ProductInCommandType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         dump($options);
-        $category = $options['data']['category'];
+        // $category = $options['data']['category'];
         $builder
             ->add('products', EntityType::class, array(
                 'class' => 'PlatformBundle:Product',
                 'choice_label' => 'designation',
-                'query_builder' => function (ProductRepository $er) use ($category) {
-                    return $er->getCategoryOfProduct($category);
-                },
+                // 'query_builder' => function (ProductRepository $er) use ($category) {
+                //     return $er->getCategoryOfProduct($category);
+                // },
             ))
-            ->add('quantity',   IntegerType::class)
-            ->add('save',      SubmitType::class);
+            ->add('quantity',   IntegerType::class, [
+                'attr' => [
+                    'autocomplete' => 'off',
+                ]
+            ]);
+        // ->add('save',      SubmitType::class);
     }
     /**
      * {@inheritdoc}
@@ -47,6 +52,6 @@ class ProductInCommandType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'platformbundle_product';
+        return 'ProductInCommandType';
     }
 }
