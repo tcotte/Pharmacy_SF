@@ -25,7 +25,12 @@ class Command
      * @ORM\ManyToMany(targetEntity="PlatformBundle\Entity\Product",cascade={"persist"})
      * @ORM\JoinColumn(nullable=true)
      */
-    private $category;
+    private $products;
+
+    /**
+     * @ORM\Column(name="creationDate", type="datetime")
+     */
+    private $creationDate;
 
     /**
      * @var int
@@ -73,6 +78,7 @@ class Command
      */
     public function __construct()
     {
+        $this->creationDate       = new \Datetime();
         $this->category = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
@@ -108,5 +114,63 @@ class Command
     public function getCategory()
     {
         return $this->category;
+    }
+
+    /**
+     * Set creationDate
+     *
+     * @param \DateTime $creationDate
+     *
+     * @return Command
+     */
+    public function setCreationDate($creationDate)
+    {
+        $this->creationDate = $creationDate;
+
+        return $this;
+    }
+
+    /**
+     * Get creationDate
+     *
+     * @return \DateTime
+     */
+    public function getCreationDate()
+    {
+        return $this->creationDate;
+    }
+
+    /**
+     * Add product
+     *
+     * @param \PlatformBundle\Entity\Product $product
+     *
+     * @return Command
+     */
+    public function addProduct(\PlatformBundle\Entity\Product $product)
+    {
+        $this->products[] = $product;
+
+        return $this;
+    }
+
+    /**
+     * Remove product
+     *
+     * @param \PlatformBundle\Entity\Product $product
+     */
+    public function removeProduct(\PlatformBundle\Entity\Product $product)
+    {
+        $this->products->removeElement($product);
+    }
+
+    /**
+     * Get products
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getProducts()
+    {
+        return $this->products;
     }
 }

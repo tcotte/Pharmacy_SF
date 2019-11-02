@@ -9,5 +9,4 @@ namespace PlatformBundle\Repository;
  * repository methods below.
  */
 class CommandRepository extends \Doctrine\ORM\EntityRepository
-{
-}
+{ }

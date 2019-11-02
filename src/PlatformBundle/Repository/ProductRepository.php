@@ -10,4 +10,11 @@ namespace PlatformBundle\Repository;
  */
 class ProductRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function getCategoryOfProduct($category)
+    {
+        return $this
+            ->createQueryBuilder('c')
+            ->where('c.category = :category')
+            ->setParameter('category', $category);
+    }
 }
