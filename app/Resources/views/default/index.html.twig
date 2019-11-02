@@ -39,8 +39,9 @@
                                 <h5 class="text-white h4">Modification d'un formulaire</h5>
                                 {% for category in listCategory %}
                                     <a class="text-white h6" href="{{ path('editFormulary', {'id': category.id }) }}">
-                                        {{ category.name }}<br>
+                                        {{ category.name }}
                                     </a>
+                                    <br>
                                 {% endfor %}
 
                             </div>
@@ -52,7 +53,7 @@
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <a class="navbar-brand" href="#">Navbar</a>
+                <a class="navbar-brand" href="#">Commandes</a>
                 <div class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Dropdown
