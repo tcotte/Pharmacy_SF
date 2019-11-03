@@ -20,12 +20,13 @@ class ProductInCommandType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        dump($options);
+
         // $category = $options['data']['category'];
         $builder
             ->add('products', EntityType::class, array(
                 'class' => 'PlatformBundle:Product',
                 'choice_label' => 'designation',
+                'placeholder' => '',
                 // 'query_builder' => function (ProductRepository $er) use ($category) {
                 //     return $er->getCategoryOfProduct($category);
                 // },
@@ -33,6 +34,7 @@ class ProductInCommandType extends AbstractType
             ->add('quantity',   IntegerType::class, [
                 'attr' => [
                     'autocomplete' => 'off',
+                    'min' => 1,
                 ]
             ]);
         // ->add('save',      SubmitType::class);

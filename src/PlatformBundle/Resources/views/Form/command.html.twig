@@ -7,29 +7,35 @@
 
         {% form_theme form 'jquery.collection.html.twig'%}
         <div id="container" class="col-md-5">
-            <div class="row horizontal-form">
+            <div class="row horizontal-form col-md-6 offset-md-1">
                 {{form_start(form)}}
 
                 {{form_row(form)}}
-                {# {{form_row(form.quantity)}} #}
-                {{dump(form)}}
+                {# <div class="col-md-6">
+                                                                                                                    {{form_row(form.children.products.vars.prototype.children.products)}}
+                                                                                                                </div>
+                                                                                                                <div class="col-md-2">
+                                                                                                                    {{form_row(form.children.products.vars.prototype.children.quantity)}}
+                                                                                                                </div> #}
+
                 {{form_end(form)}}
             </div>
+
         </div>
 
-    {% endblock %}
-{% endblock %}
-{% block javascripts %}
-    <script src="{{ asset('js/jquery.collection.js') }}"></script>
-    <script type="text/javascript">
+        {{dump(form)}}
+    </div>
+    {{form_end(form)}}
+{% endblock %}{% endblock %}{% block javascripts %}
+<script src="{{ asset('js/jquery.collection.js') }}"></script>
+<script type="text/javascript">
 
-        $('.command-collection').collection({
-            up: '<a href="#" class="btn btn-light"><i class="fas fa-long-arrow-alt-up"></i></a>',
-            down: '<a href="#" class="btn btn-light"><i class="fas fa-long-arrow-alt-down"></i></a>',
-            add: '<a href="#" class="btn btn-primary"><i class="fas fa-plus-circle"></i></a>',
-            remove: '<a href="#" class="btn btn-danger"><i class="fas fa-trash-alt"></i></a>',
-            // allow_duplicate: true
-        });
-    </script>
-
-{% endblock %}
+    $('.command-collection').collection({
+        up: '<a href="#" class="btn btn-light"><i class="fas fa-long-arrow-alt-up"></i></a>',
+        down: '<a href="#" class="btn btn-light"><i class="fas fa-long-arrow-alt-down"></i></a>',
+        add: '<a href="#" class="btn btn-primary"><i class="fas fa-plus-circle"></i></a>',
+        remove: '<a href="#" class="btn btn-danger"><i class="fas fa-trash-alt"></i></a>',
+        init_with_n_elements: 1
+        // allow_duplicate: true
+    });
+</script>{% endblock %}

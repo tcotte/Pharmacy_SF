@@ -18,6 +18,7 @@ use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use PlatformBundle\Repository\ProductRepository;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 
 class DefaultController extends Controller
@@ -37,11 +38,12 @@ class DefaultController extends Controller
 
     /**
      * @Route("/viewFormulary/{id}", name="viewFormulary", requirements={"id"="\d+"})
+     * @ParamConverter("category", options={"mapping": {"id": "id"}})
      */
-    public function ViewFormularyAction($id)
+    public function ViewFormularyAction(Category $category)
     {
         $em = $this->getDoctrine()->getManager();
-        $category = $em->getRepository('PlatformBundle:Category')->findOneById($id);
+        // $category = $em->getRepository('PlatformBundle:Category')->findOneById($id);
 
         $command = new Command();
 
@@ -64,9 +66,10 @@ class DefaultController extends Controller
                 'allow_delete' => true,
                 'prototype'    => true,
                 'required'     => false,
-                'by_reference' => false,
+                'by_reference' => true,
                 'attr'         => [
                     'class' => "command-collection",
+                    'label' => false,
                 ],
             ])
             ->add('Valider', SubmitType::class)
@@ -113,11 +116,12 @@ class DefaultController extends Controller
 
     /**
      * @Route("/editFormulary/{id}", name="editFormulary", requirements={"id"="\d+"})
+     * @ParamConverter("category", options={"mapping": {"id": "id"}})
      */
-    public function editFormularyAction($id, Request $request)
+    public function editFormularyAction(Category $category, Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        $category = $em->getRepository('PlatformBundle:Category')->findOneById($id);
+        // $category = $em->getRepository('PlatformBundle:Category')->findOneById($id);
 
         $originalProducts = new ArrayCollection();
 
