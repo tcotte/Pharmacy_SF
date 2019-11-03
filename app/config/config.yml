@@ -4,6 +4,7 @@ imports:
     - { resource: services.yml }
     - { resource: "@AppBundle/Resources/config/services.yml" }
     - { resource: "@PlatformBundle/Resources/config/services.yml" }
+    - { resource: "@UserBundle/Resources/config/services.yml" }
 
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
@@ -33,12 +34,24 @@ framework:
     php_errors:
         log: true
 
+
 # Twig Configuration
 twig:
     form_themes: ['bootstrap_4_layout.html.twig']
     debug: '%kernel.debug%'
     strict_variables: '%kernel.debug%'
     
+# FOS_user Configuration   
+fos_user:
+    db_driver:     orm                       # Le type de BDD à utiliser, nous utilisons l'ORM Doctrine depuis le début
+    firewall_name: main                      # Le nom du firewall derrière lequel on utilisera ces utilisateurs
+    user_class:    UserBundle\Entity\User # La classe de l'entité User que nous utilisons
+    service:                               
+        mailer: fos_user.mailer.twig_swift 
+    from_email:
+        address: adress@gmail.com
+        sender_name: No reply
+  
 
 # Doctrine Configuration
 doctrine:
