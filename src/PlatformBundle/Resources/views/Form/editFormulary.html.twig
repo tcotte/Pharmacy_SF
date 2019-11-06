@@ -2,40 +2,32 @@
 {% block content %}
     {% block stylesheets %}
         <link href="{{ asset('css/form.css') }}" rel="stylesheet"/>
+        <link href="{{ asset('css/editFormulary-form.css') }}" rel="stylesheet"/>
     {% endblock %}
     <center>
-        <div id="container" class="col-md-5">
+        <div id="container" class="col-md-11">
 
-            <h3>Edit formulary</h3>
-            <div class="col-md-5">
-                {%
+            <h3>Modification d'un formulaire</h3>
+            {# <div class="col-md-12"> #}
+            {%
                     form_theme form
                     'bootstrap_4_layout.html.twig'
                         'jquery.collection.html.twig'%}
-                {{ form_start(form) }}
-                {{ form_row(form) }}
-                {{ form_end(form)}}
-
-
-            </div>
+            {{ form_start(form) }}
+            {{ form_end(form)}}
 
         </div>
 
-    </center>
+    </div>
+</center>{% endblock %}{% block javascripts %}
+<script src="{{ asset('js/jquery.collection.js') }}"></script>
+<script type="text/javascript">
 
-
-{% endblock %}
-{% block javascripts %}
-    <script src="{{ asset('js/jquery.collection.js') }}"></script>
-    <script type="text/javascript">
-
-        $('.product-collection').collection({
-            up: '<a href="#" class="btn btn-light"><i class="fas fa-long-arrow-alt-up"></i></a>',
-            down: '<a href="#" class="btn btn-light"><i class="fas fa-long-arrow-alt-down"></i></a>',
-            add: '<a href="#" class="btn btn-primary"><i class="fas fa-plus-circle"></i></a>',
-            remove: '<a href="#" class="btn btn-danger"><i class="fas fa-trash-alt"></i></a>',
-            // allow_duplicate: true
-        });
-    </script>
-
-{% endblock %}
+    $('.product-collection').collection({
+        up: '<a href="#" class="btn btn-light"><i class="fas fa-long-arrow-alt-up"></i></a>',
+        down: '<a href="#" class="btn btn-light"><i class="fas fa-long-arrow-alt-down"></i></a>',
+        add: '<a href="#" class="btn btn-primary"><i class="fas fa-plus-circle"></i></a>',
+        remove: '<a href="#" class="btn btn-danger"><i class="fas fa-trash-alt"></i></a>',
+        // allow_duplicate: true
+    });
+</script>{% endblock %}

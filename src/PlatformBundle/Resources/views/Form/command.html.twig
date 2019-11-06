@@ -2,6 +2,7 @@
 {% block content %}
     {% block stylesheets %}
         <link href="{{ asset('css/form.css') }}" rel="stylesheet"/>
+        <link href="{{ asset('css/command-form.css') }}" rel="stylesheet"/>
     {% endblock %}
     {% block ProductInCommandType_widget %}
 
@@ -11,21 +12,18 @@
                 {{form_start(form)}}
 
                 {{form_row(form)}}
-                {# <div class="col-md-6">
-                                                                                                                    {{form_row(form.children.products.vars.prototype.children.products)}}
-                                                                                                                </div>
-                                                                                                                <div class="col-md-2">
-                                                                                                                    {{form_row(form.children.products.vars.prototype.children.quantity)}}
-                                                                                                                </div> #}
+
 
                 {{form_end(form)}}
             </div>
 
         </div>
 
-        {{dump(form)}}
+
     </div>
     {{form_end(form)}}
+
+
 {% endblock %}{% endblock %}{% block javascripts %}
 <script src="{{ asset('js/jquery.collection.js') }}"></script>
 <script type="text/javascript">

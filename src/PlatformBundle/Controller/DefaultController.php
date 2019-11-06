@@ -7,6 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use PlatformBundle\Form\CategoryType;
 use PlatformBundle\Form\EditFormularyType;
+use PlatformBundle\Form\CommandType;
 use PlatformBundle\Form\ProductInCommandType;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -40,44 +41,71 @@ class DefaultController extends Controller
      * @Route("/viewFormulary/{id}", name="viewFormulary", requirements={"id"="\d+"})
      * @ParamConverter("category", options={"mapping": {"id": "id"}})
      */
-    public function ViewFormularyAction(Category $category)
+    public function ViewFormularyAction(Request $request, Category $category)
     {
         $em = $this->getDoctrine()->getManager();
         // $category = $em->getRepository('PlatformBundle:Category')->findOneById($id);
 
         $command = new Command();
 
-        // $form = $this->get('form.factory')->create(ProductInCommandType::class, [
-        //     'category' => $category // send this data in option
-        // ]);
+        // $originalProducts = new ArrayCollection();
 
-        $formBuilder = $this->get('form.factory')->createBuilder(FormType::class, $command);
+        // Create an ArrayCollection of the current Tag objects in the database
+        // foreach ($command->getProducts() as $product) {
+        //     $originalProducts->add($product);
+        // }
 
-        $formBuilder
-            ->add('products', CollectionType::class, [
-                'entry_type'   => ProductInCommandType::class,
+        $form = $this->get('form.factory')->create(CommandType::class, [
+            'category' => $category // send this data in option
+        ]);
 
-                // [
-                //     'category' => $category // send this data in option
-                // ],
-                'entry_options' => ['label' => false],
-                'label'        => false,
-                'allow_add'    => true,
-                'allow_delete' => true,
-                'prototype'    => true,
-                'required'     => false,
-                'by_reference' => true,
-                'attr'         => [
-                    'class' => "command-collection",
-                    'label' => false,
-                ],
-            ])
-            ->add('Valider', SubmitType::class)
-            ->getForm();
-        // Pour l'instant, pas de candidatures, catégories, etc., on les gérera plus tard
+        $form->handleRequest($request);
 
-        // À partir du formBuilder, on génère le formulaire
-        $form = $formBuilder->getForm();
+        if ($form->isValid()) {
+            dump($form->getData()["products"][0]);
+
+            foreach ($form->getData()["products"][0] as $product) {
+                $command->setQuantity($product->getQuantity());
+                $command->addProduct($product["products"]);
+            }
+
+
+            // $command->setQuantity($form->getData()["products"][$product]['quantity']);
+            $em->persist($command);
+            $em->flush();
+            $request->getSession()->getFlashBag()->add('success', 'La commande "' . $command->getId() . '" a bien été enregistrée !');
+            return $this->redirectToRoute('app');
+        }
+
+
+
+
+        // $formBuilder = $this->get('form.factory')->createBuilder(FormType::class, $command);
+
+        // $formBuilder
+        //     ->add('products', CollectionType::class, [
+        //         'entry_type'   => ProductInCommandType::class,
+        //         'entry_options' => array(
+        //             'label' => false,
+        //             'category' => $category
+        //         ),
+        //         'label'        => false,
+        //         'allow_add'    => true,
+        //         'allow_delete' => true,
+        //         'prototype'    => true,
+        //         'required'     => false,
+        //         'by_reference' => true,
+        //         'attr'         => [
+        //             'class' => "command-collection",
+        //             'label' => false,
+        //         ],
+        //     ])
+        //     ->add('Valider', SubmitType::class)
+        //     ->getForm();
+        // // Pour l'instant, pas de candidatures, catégories, etc., on les gérera plus tard
+
+        // // À partir du formBuilder, on génère le formulaire
+        // $form = $formBuilder->getForm();
 
 
         // return $this->render('@Platform/Default/viewFormulary.html.twig', array(

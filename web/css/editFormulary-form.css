@@ -1,0 +1,17 @@
+div[id^="platformbundle_category_products_"] {
+    display: flex;
+    margin-top: 50px;
+
+}
+div[id^="platformbundle_category_products_"] div.form-group:nth-child(n + 2) {
+    margin-left: 50px;
+}
+div[id^="platformbundle_category_products_"] div.form-group:nth-child(1) {
+    width: 500px;
+}
+div[id^="platformbundle_category_products_"] div.form-group:nth-child(1) > label {
+    font-weight: bold;
+}
+legend {
+    display: none;
+}
