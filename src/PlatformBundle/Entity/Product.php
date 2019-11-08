@@ -21,6 +21,7 @@ class Product
     private $category;
 
 
+
     /**
      * @var int
      *
@@ -280,5 +281,29 @@ class Product
     public function getCategory()
     {
         return $this->category;
+    }
+
+    /**
+     * Set commandProduct
+     *
+     * @param \PlatformBundle\Entity\CommandProduct $commandProduct
+     *
+     * @return Product
+     */
+    public function setCommandProduct(\PlatformBundle\Entity\CommandProduct $commandProduct = null)
+    {
+        $this->commandProduct = $commandProduct;
+
+        return $this;
+    }
+
+    /**
+     * Get commandProduct
+     *
+     * @return \PlatformBundle\Entity\CommandProduct
+     */
+    public function getCommandProduct()
+    {
+        return $this->commandProduct;
     }
 }

@@ -21,6 +21,7 @@ class Command
      */
     private $id;
 
+    //ManyToOne CommandProduct $commandProducts
     /**
      * @ORM\ManyToMany(targetEntity="PlatformBundle\Entity\Product",cascade={"persist"})
      * @ORM\JoinColumn(nullable=true)
@@ -149,9 +150,10 @@ class Command
      */
     public function addProduct(\PlatformBundle\Entity\Product $product)
     {
-        $this->products[] = $product;
+        // for a many-to-many association:
+        $product->addCommand($this);
 
-        return $this;
+        $this->products->add($product);
     }
 
     /**
