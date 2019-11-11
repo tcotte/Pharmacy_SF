@@ -2,6 +2,8 @@
 
 namespace PlatformBundle\Form;
 
+use PlatformBundle\Entity\Command;
+use PlatformBundle\Entity\CommandProduct;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -19,24 +21,11 @@ class CommandType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $category = $options['data']['category'];
-
-        $builder->add('products', CollectionType::class, [
-            'entry_type'   => ProductInCommandType::class,
-            'entry_options' => array(
-                'label' => false,
-                'category' => $category
-            ),
-            'label'        => false,
-            'allow_add'    => true,
-            'allow_delete' => true,
-            'prototype'    => true,
-            'required'     => false,
-            'by_reference' => true,
-            'attr'         => [
-                'class' => "command-collection",
-                'label' => false,
-            ],
+        $builder->add('commandProducts', CollectionType::class, [
+            'entry_type'   => CommandProductType::class,
+            'allow_add' => true,
+            'prototype' => true,
+            'prototype_name' => '__proto_commandProduct__',
         ])
             ->add('Valider', SubmitType::class);
     }
@@ -46,7 +35,7 @@ class CommandType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => null
+            'data_class' => Command::class
         ));
     }
 

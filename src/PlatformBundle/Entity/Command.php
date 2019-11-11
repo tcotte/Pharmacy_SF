@@ -12,6 +12,8 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Command
 {
+
+
     /**
      * @var int
      *
@@ -21,12 +23,16 @@ class Command
      */
     private $id;
 
-    //ManyToOne CommandProduct $commandProducts
     /**
-     * @ORM\ManyToMany(targetEntity="PlatformBundle\Entity\Product",cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="PlatformBundle\Entity\Category", fetch="EAGER", cascade={"persist"})
      * @ORM\JoinColumn(nullable=true)
      */
-    private $products;
+    private $category;
+
+    /**
+     * @ORM\OneToMany(targetEntity="PlatformBundle\Entity\CommandProduct", mappedBy="command", fetch="EAGER",cascade={"persist"})
+     */
+    private $commandProducts;
 
     /**
      * @ORM\Column(name="creationDate", type="datetime")
@@ -34,11 +40,22 @@ class Command
     private $creationDate;
 
     /**
-     * @var int
+     * @var boolean
      *
-     * @ORM\Column(name="quantity", type="integer")
+     * @ORM\Column(name="treat", type="boolean")
      */
-    private $quantity;
+    private $treat;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->creationDate       = new \Datetime();
+        $this->treat     = false;
+    }
+
+
 
 
     /**
@@ -51,71 +68,8 @@ class Command
         return $this->id;
     }
 
-    /**
-     * Set quantity
-     *
-     * @param integer $quantity
-     *
-     * @return Command
-     */
-    public function setQuantity($quantity)
-    {
-        $this->quantity = $quantity;
 
-        return $this;
-    }
 
-    /**
-     * Get quantity
-     *
-     * @return int
-     */
-    public function getQuantity()
-    {
-        return $this->quantity;
-    }
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->creationDate       = new \Datetime();
-        $this->category = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-
-    /**
-     * Add category
-     *
-     * @param \PlatformBundle\Entity\Product $category
-     *
-     * @return Command
-     */
-    public function addCategory(\PlatformBundle\Entity\Product $category)
-    {
-        $this->category[] = $category;
-
-        return $this;
-    }
-
-    /**
-     * Remove category
-     *
-     * @param \PlatformBundle\Entity\Product $category
-     */
-    public function removeCategory(\PlatformBundle\Entity\Product $category)
-    {
-        $this->category->removeElement($category);
-    }
-
-    /**
-     * Get category
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getCategory()
-    {
-        return $this->category;
-    }
 
     /**
      * Set creationDate
@@ -142,37 +96,84 @@ class Command
     }
 
     /**
-     * Add product
+     * Set category
      *
-     * @param \PlatformBundle\Entity\Product $product
+     * @param \PlatformBundle\Entity\Category $category
      *
      * @return Command
      */
-    public function addProduct(\PlatformBundle\Entity\Product $product)
+    public function setCategory(\PlatformBundle\Entity\Category $category = null)
     {
-        // for a many-to-many association:
-        $product->addCommand($this);
+        $this->category = $category;
 
-        $this->products->add($product);
+        return $this;
     }
 
     /**
-     * Remove product
+     * Get category
      *
-     * @param \PlatformBundle\Entity\Product $product
+     * @return \PlatformBundle\Entity\Category
      */
-    public function removeProduct(\PlatformBundle\Entity\Product $product)
+    public function getCategory()
     {
-        $this->products->removeElement($product);
+        return $this->category;
     }
 
     /**
-     * Get products
+     * Add commandProduct
+     *
+     * @param \PlatformBundle\Entity\CommandProduct $commandProduct
+     *
+     * @return Command
+     */
+    public function addCommandProduct(\PlatformBundle\Entity\CommandProduct $commandProduct)
+    {
+        $this->commandProducts[] = $commandProduct;
+
+        return $this;
+    }
+
+    /**
+     * Remove commandProduct
+     *
+     * @param \PlatformBundle\Entity\CommandProduct $commandProduct
+     */
+    public function removeCommandProduct(\PlatformBundle\Entity\CommandProduct $commandProduct)
+    {
+        $this->commandProducts->removeElement($commandProduct);
+    }
+
+    /**
+     * Get commandProducts
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getProducts()
+    public function getCommandProducts()
     {
-        return $this->products;
+        return $this->commandProducts;
+    }
+
+    /**
+     * Set treat
+     *
+     * @param boolean $treat
+     *
+     * @return Command
+     */
+    public function setTreat($treat)
+    {
+        $this->treat = $treat;
+
+        return $this;
+    }
+
+    /**
+     * Get treat
+     *
+     * @return boolean
+     */
+    public function getTreat()
+    {
+        return $this->treat;
     }
 }

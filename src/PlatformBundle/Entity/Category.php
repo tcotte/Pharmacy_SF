@@ -3,6 +3,7 @@
 namespace PlatformBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as Serializer;
 
 /**
  * Category
@@ -22,14 +23,8 @@ class Category
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="PlatformBundle\Entity\Command", fetch="EAGER", cascade={"persist"})
-     * @ORM\JoinColumn(nullable=true)
-     */
-    private $command;
-
-
-    /**
      * @ORM\OneToMany(targetEntity="PlatformBundle\Entity\Product", mappedBy="category", fetch="EAGER",cascade={"persist"})
+     * @Serializer\Exclude()
      */
     private $products;
 
@@ -115,29 +110,5 @@ class Category
     public function getProducts()
     {
         return $this->products;
-    }
-
-    /**
-     * Set command
-     *
-     * @param \PlatformBundle\Entity\Command $command
-     *
-     * @return Category
-     */
-    public function setCommand(\PlatformBundle\Entity\Command $command = null)
-    {
-        $this->command = $command;
-
-        return $this;
-    }
-
-    /**
-     * Get command
-     *
-     * @return \PlatformBundle\Entity\Command
-     */
-    public function getCommand()
-    {
-        return $this->command;
     }
 }

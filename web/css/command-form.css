@@ -1,15 +1,16 @@
 /* Formulary where the user fills in the command --> command.html.twig */
-div[id^="platformbundle_command_products_"] {
-    display: flex;
-    width: 450px;
-}
-div[id^="platformbundle_command_products_"] div:nth-child(2n) {
-    margin-left: 150px;
-    width: 70px;
-}
+d
 select {
     width: 200px;
 }
 legend{
     display:none;
 }
+select.hidden {
+    display: none;
+}
+
+#table-header{
+font-weight:bold;
+}
+
