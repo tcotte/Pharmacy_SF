@@ -9,4 +9,48 @@ namespace PlatformBundle\Repository;
  * repository methods below.
  */
 class CommandRepository extends \Doctrine\ORM\EntityRepository
-{ }
+{
+    public function findByUser($user)
+    {
+        $qb = $this->createQueryBuilder('a');
+
+        $qb->where('a.user = :user')
+            ->setParameter('user', $user)
+
+        ;
+
+        return $qb
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
+    public function findByTreatmentOrderDate()
+    {
+        $qb = $this->createQueryBuilder('a');
+
+        $qb->where('a.treat = false')
+            ->orderBy('a.creationDate', 'DESC')
+        ;
+
+        return $qb
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
+    public function findByUserOrderDate($user)
+    {
+        $qb = $this->createQueryBuilder('a');
+
+        $qb->where('a.user = :user')
+            ->setParameter('user', $user)
+            ->orderBy('a.creationDate', 'DESC')
+        ;
+
+        return $qb
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+}

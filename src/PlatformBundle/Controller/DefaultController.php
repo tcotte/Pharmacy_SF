@@ -34,10 +34,12 @@ class DefaultController extends Controller
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
-        $category = $em->getRepository('PlatformBundle:Category')->findAll();
+        $user = $this->getUser();
+        $listCommand = $em->getRepository(Command::class)->findByUserOrderDate($user);
 
-        return $this->render('@Platform/Default/index.html.twig', array(
+        return $this->render('@Platform/Default/viewCommandUser.html.twig', array(
             'listCategory' => $this->get('app_service.layout_data')->getLayoutData(),
+            'listCommand'=> $listCommand,
         ));
     }
 
@@ -47,8 +49,7 @@ class DefaultController extends Controller
     public function viewCommandAction()
     {
         $em = $this->getDoctrine()->getManager();
-        $listCommand = $em->getRepository('PlatformBundle:Command')->findAll();
-        dump($listCommand);
+        $listCommand = $em->getRepository('PlatformBundle:Command')->findByTreatmentOrderDate();
 
         return $this->render('@Platform/Default/viewCommand.html.twig', array(
             'listCategory' => $this->get('app_service.layout_data')->getLayoutData(),
@@ -65,6 +66,7 @@ class DefaultController extends Controller
         $listCommand = $em->getRepository('PlatformBundle:Command')->findAll();
         $command = $em->getRepository('PlatformBundle:Command')->find($id);
         $command->setTreat(true);
+        $command->setTreatmentDate(new \DateTime('now'));
         $em->persist($command);
         $em->flush();
 
@@ -78,7 +80,7 @@ class DefaultController extends Controller
     public function ViewFormularyAction(Request $request, Category $category)
     {
         $em = $this->getDoctrine()->getManager();
-
+        $user = $this->getUser();
         $listProduct = $category->getProducts();
 
         $command = new Command();
@@ -98,6 +100,7 @@ class DefaultController extends Controller
         if ($form->isValid()) {
             /** @var Command $command */
             $command = $form->getData();
+            $command->setUser($user);
             $em->persist($command);
             $em->flush();
             $request->getSession()->getFlashBag()->add('success', 'La commande "' . $command->getId() . '" a bien été enregistrée !');

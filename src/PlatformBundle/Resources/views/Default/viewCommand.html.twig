@@ -7,7 +7,7 @@
 		<br>
 		<div class="col-md-6">
 			{% for command in listCommand %}
-				<div class="card border-success" attr-id="{{ command.id }}">
+				<div class="card border-dark" attr-id="{{ command.id }}">
 					<div class="card-header">
 						<div class="inline">
 							Commande n°{{command.id}}
@@ -21,11 +21,13 @@
 					<div class="card-body">
 						<h5 class="card-title">{{command.category.name}}</h5>
 						{% for product in command.commandProducts %}
+							{% if product.quantity > 0 %}
 							<p class="card-text">
 								<b>{{product.quantity}}</b>
 								x
 								<b>{{product.product.designation}}</b>
 							</p>
+							{% endif %}
 						{% endfor %}
 						<div class="row">
 							<a href="#" class="btn btn-primary">Voir le détail</a>

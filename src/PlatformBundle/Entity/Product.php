@@ -15,7 +15,7 @@ class Product
 
 
     /**
-     * @ORM\ManyToOne(targetEntity="PlatformBundle\Entity\Category", inversedBy="products",fetch="EAGER", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="PlatformBundle\Entity\Category", inversedBy="products",fetch="EAGER", cascade={"persist","remove"})
      * @ORM\JoinColumn(nullable=true)
      */
     private $category;

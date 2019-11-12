@@ -211,28 +211,4 @@ class Command
     {
         return $this->user;
     }
-
-    /**
-     * Set treatmentDate
-     *
-     * @param \DateTime $treatmentDate
-     *
-     * @return Command
-     */
-    public function setTreatmentDate($treatmentDate)
-    {
-        $this->treatmentDate = $treatmentDate;
-
-        return $this;
-    }
-
-    /**
-     * Get treatmentDate
-     *
-     * @return \DateTime
-     */
-    public function getTreatmentDate()
-    {
-        return $this->treatmentDate;
-    }
 }
