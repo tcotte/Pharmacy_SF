@@ -3,6 +3,7 @@
 namespace PlatformBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as Serializer;
 
 /**
  * Category
@@ -22,7 +23,8 @@ class Category
     private $id;
 
     /**
-     * @ORM\OneToMany(targetEntity="PlatformBundle\Entity\Product", mappedBy="category",cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="PlatformBundle\Entity\Product", mappedBy="category", fetch="EAGER",cascade={"persist","remove"})
+     * @Serializer\Exclude()
      */
     private $products;
 

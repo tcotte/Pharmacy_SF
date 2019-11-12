@@ -2,4 +2,10 @@
 {% block content %}
     Vous etes sur le formulaire
     {{ category.name }}
+
+    <div class="col-md-5">
+        {{form_start(form)}}
+        {{form_row(form)}}
+        {{form_end(form)}}
+    </div>
 {% endblock %}

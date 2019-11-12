@@ -1,0 +1,83 @@
+{% extends "default/index.html.twig" %}
+{% block content %}
+    {% block stylesheets %}
+        <link href="{{ asset('css/form.css') }}" rel="stylesheet"/>
+        <link href="{{ asset('css/command-form.css') }}" rel="stylesheet"/>
+    {% endblock %}
+
+    <div id="container" class="col-md-11">
+        <div class="row" id="table-header">
+            <div class="col-md-11">
+                <div class="row">
+                    <div class='col-md-4'>
+                        Désignation
+                    </div>
+                    <div class='col-md-2'>
+                        Fournisseur
+                    </div>
+                    <div class='col-md-2'>
+                        Référence
+                    </div>
+                    <div class='col-md-2'>
+                        Prix
+                    </div>
+                    <div class='col-md-2'>
+                        CDT
+                    </div>
+                </div>
+            </div>
+            <div class="'col-md-1">
+                Quantité
+            </div>
+        </div>
+        <hr>
+
+
+        {{ form_start(form) }}
+
+        {{ form_row(form) }}
+
+        {{ form_end(form) }}
+
+
+    </div>
+
+{% endblock %}
+{% block javascripts %}
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.product-select').each(function (product) {
+                let productId = $(this).val();
+                let productSelect = $(this);
+                $.get(Routing.generate('getProductInfo', {id: productId}), function (data) {
+                    product = JSON.parse(data);
+                    productSelect.after(
+                        "<div class='row'>" +
+                        "<div class='col-md-4'>" +
+                        "<b>" + product.designation + "</b>" +
+                        "</div><div class='col-md-2'>" +
+                        product.supplier +
+                        "</div><div class='col-md-2'>" +
+                        product.reference +
+                        "</div><div class='col-md-2'>" +
+                        product.price + "€" +
+                        "</div><div class='col-md-2'>" +
+                        product.cdt +
+                        "</div></div>"
+                    );
+
+                });
+            });
+            $('div[id^="platformbundle_command_commandProducts_"]').addClass("row");
+            $('div[id^="platformbundle_command_commandProducts_"] div:first-child').wrap(
+                "<div class='col-md-11'></div>"
+            );
+            $('div[id^="platformbundle_command_commandProducts_"] div:nth-child(2)').wrap(
+                "<div class='col-md-1'></div>"
+            );
+
+
+        });
+    </script>
+{% endblock %}

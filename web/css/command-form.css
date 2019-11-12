@@ -1,0 +1,16 @@
+/* Formulary where the user fills in the command --> command.html.twig */
+d
+select {
+    width: 200px;
+}
+legend{
+    display:none;
+}
+select.hidden {
+    display: none;
+}
+
+#table-header{
+font-weight:bold;
+}
+

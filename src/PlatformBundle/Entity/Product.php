@@ -15,10 +15,11 @@ class Product
 
 
     /**
-     * @ORM\ManyToOne(targetEntity="PlatformBundle\Entity\Category", inversedBy="products",cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="PlatformBundle\Entity\Category", inversedBy="products",fetch="EAGER", cascade={"persist","remove"})
      * @ORM\JoinColumn(nullable=true)
      */
     private $category;
+
 
 
     /**
@@ -280,5 +281,29 @@ class Product
     public function getCategory()
     {
         return $this->category;
+    }
+
+    /**
+     * Set commandProduct
+     *
+     * @param \PlatformBundle\Entity\CommandProduct $commandProduct
+     *
+     * @return Product
+     */
+    public function setCommandProduct(\PlatformBundle\Entity\CommandProduct $commandProduct = null)
+    {
+        $this->commandProduct = $commandProduct;
+
+        return $this;
+    }
+
+    /**
+     * Get commandProduct
+     *
+     * @return \PlatformBundle\Entity\CommandProduct
+     */
+    public function getCommandProduct()
+    {
+        return $this->commandProduct;
     }
 }
