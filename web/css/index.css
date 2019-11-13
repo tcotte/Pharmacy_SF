@@ -1,0 +1,11 @@
+body {
+   background-color: #EDF5FC;
+}
+#navbarDropdown, .navbar-brand{
+  font-size: 1.2rem;
+   margin-right: 0px;
+}
+
+.dropdown-item{
+  font-size: 1rem;
+}

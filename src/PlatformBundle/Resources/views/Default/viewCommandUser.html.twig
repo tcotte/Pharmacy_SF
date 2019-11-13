@@ -6,6 +6,9 @@
         </h3>
         <br>
         <div class="col-md-6">
+            {% if listCommand is empty %}
+            <p>Vous n'avez pas créé de commande récemment</p>
+            {% endif %}
             {% for command in listCommand %}
                 {% if command.treat == true %}
                 <div class="card border-success" attr-id="{{ command.id }}">
