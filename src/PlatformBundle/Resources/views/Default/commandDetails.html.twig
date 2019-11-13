@@ -1,0 +1,46 @@
+{% extends "default/index.html.twig" %}
+{% block content %}
+    <div class='form-inline' style="margin-top:40px;">
+        <div class='col-md-5 offset md-1'>
+            <center>
+                <h3>Commande n°{{ command.id }} - {{ command.category.name }} </h3><hr>
+            </center>
+        </div>
+    </div>
+    <br>
+    <h6 class="col-md-6 offset-md-1">Commande saisie par : <b>"{{ command.user.username }}"</b> le <b>{{ command.creationdate|date("d/m/Y") }}</b></h6>
+    <br>
+    <div class="col-md-10 offset-md-1">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Désignation</th>
+                <th>Quantité</th>
+                <th>Fournisseur</th>
+                <th>Code</th>
+                <th>Référence</th>
+                <th>Conditionnement</th>
+                <th>Prix</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for commandProduct in command.commandProducts %}
+                {% if commandProduct.quantity > 0 %}
+                <tr>
+                    <td>{{ commandProduct.product.designation }}</td>
+                    <td>{{ commandProduct.quantity }}</td>
+                    <td>{{ commandProduct.product.supplier }}</td>
+                    <td>{{ commandProduct.product.code }}</td>
+                    <td>{{ commandProduct.product.reference }}</td>
+                    <td>{{ commandProduct.product.cdt }}</td>
+                    <td>{{ commandProduct.product.price|number_format(2) }} €</td>
+                </tr>
+                {% endif %}
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <br>
+
+
+{% endblock %}

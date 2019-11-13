@@ -63,7 +63,7 @@ class DefaultController extends Controller
      */
     public function showDetailsAction(Command $command)
     {
-
+        dump($command);
         return $this->render('@Platform/Default/commandDetails.html.twig', array(
             'listCategory' => $this->get('app_service.layout_data')->getLayoutData(),
             'command'=> $command,

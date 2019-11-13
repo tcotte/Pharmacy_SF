@@ -36,7 +36,7 @@
 
                         {% endfor %}
                         <div class="row">
-                            <a href="#" class="btn btn-primary">Voir le détail</a>
+                            <a href="{{path('commandDetails', {'id': command.id }) }}" class="btn btn-primary">Voir le détail</a>
 
 
                         </div>
@@ -72,7 +72,7 @@
                                 {% endif %}
                             {% endfor %}
                             <div class="row">
-                                <a href="#" class="btn btn-primary">Voir le détail</a>
+                                <a href="{{path('commandDetails', {'id': command.id }) }}" class="btn btn-primary">Voir le détail</a>
 
 
                             </div>
