@@ -10,21 +10,14 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use PlatformBundle\Form\CategoryType;
 use PlatformBundle\Form\EditFormularyType;
 use PlatformBundle\Form\CommandType;
-use PlatformBundle\Form\CommandProductType;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Common\Collections\ArrayCollection;
 use PlatformBundle\Entity\Command;
 use PlatformBundle\Entity\CommandProduct;
-use Symfony\Component\Form\Extension\Core\Type\FormType;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-use Symfony\Component\Form\Extension\Core\Type\IntegerType;
-use Symfony\Component\Form\Extension\Core\Type\NumberType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use PlatformBundle\Repository\ProductRepository;
-use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Response;
 use UserBundle\Form\ProfileFormType;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 class DefaultController extends Controller
 {
@@ -32,6 +25,7 @@ class DefaultController extends Controller
 
     /**
      * @Route("/app", name="app")
+     * @Security("has_role('ROLE_USER')")
      */
     public function indexAction()
     {
@@ -47,6 +41,7 @@ class DefaultController extends Controller
 
     /**
      * @Route("/command", name="viewCommand")
+     * @Security("has_role('ROLE_PHARMA')")
      */
     public function viewCommandAction()
     {
@@ -61,6 +56,7 @@ class DefaultController extends Controller
 
     /**
      * @Route("/command/treated/{id}", name="treatCommand", requirements={"id"="\d+"}, options = { "expose" = true })
+     * @Security("has_role('ROLE_PHARMA')")
      */
     public function treatCommandAction($id)
     {
@@ -78,6 +74,7 @@ class DefaultController extends Controller
     /**
      * @Route("/viewFormulary/{id}", name="viewFormulary", requirements={"id"="\d+"})
      * @ParamConverter("category", options={"mapping": {"id": "id"}})
+     * @Security("has_role('ROLE_BLOC')")
      */
     public function ViewFormularyAction(Request $request, Category $category)
     {
@@ -118,6 +115,7 @@ class DefaultController extends Controller
     /**
      * @Method("GET")
      * @Route("/productInfo/{id}", name="getProductInfo", requirements={"id"="\d+"}, options = { "expose" = true })
+     * @Security("has_role('ROLE_USER')")
      */
     public function getProductInfoAction(Request $request, $id)
     {
@@ -134,6 +132,7 @@ class DefaultController extends Controller
 
     /**
      * @Route("/addFormulary", name="addFormulary")
+     * @Security("has_role('ROLE_PHARMA')")
      */
     public function addFormularyAction(Request $request)
     {
@@ -160,6 +159,7 @@ class DefaultController extends Controller
     /**
      * @Route("/editFormulary/{id}", name="editFormulary", requirements={"id"="\d+"})
      * @ParamConverter("category", options={"mapping": {"id": "id"}})
+     * @Security("has_role('ROLE_PHARMA')")
      */
     public function editFormularyAction(Category $category, Request $request)
     {
@@ -183,11 +183,6 @@ class DefaultController extends Controller
                     $em->persist($product);
                     $em->remove($product);
 
-                    // if ($em->persist($product)) {
-                    //     $request->getSession()->getFlashBag()->add('success', 'Le produit "' . $product->getDesignation() . '" a bien été enregistré !');
-                    // } elseif ($em->remove($product)) {
-                    //     $request->getSession()->getFlashBag()->add('alert', 'Le produit "' . $product->getDesignation() . '" a bien été supprimé !');
-                    // }
                 }
             }
             $em->persist($category);

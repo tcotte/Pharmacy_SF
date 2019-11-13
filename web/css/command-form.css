@@ -1,5 +1,4 @@
-/* Formulary where the user fills in the command --> command.html.twig */
-d
+
 select {
     width: 200px;
 }
@@ -17,4 +16,9 @@ font-weight:bold;
 .number-type{
     padding-left: 0px;
     padding-right:40px;
+}
+
+#platformbundle_command_Valider {
+    display: block;
+    margin: auto;
 }
