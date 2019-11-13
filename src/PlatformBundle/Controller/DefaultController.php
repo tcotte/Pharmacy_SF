@@ -55,6 +55,22 @@ class DefaultController extends Controller
     }
 
     /**
+     * @Route("/commandDetails/{id}", name="commandDetails", requirements={"id"="\d+"})
+     * * @ParamConverter("command", options={"mapping": {"id": "id"}})
+     * @Security("has_role('ROLE_BLOC')")
+     * @param Command $command
+     * @return Response
+     */
+    public function showDetailsAction(Command $command)
+    {
+
+        return $this->render('@Platform/Default/commandDetails.html.twig', array(
+            'listCategory' => $this->get('app_service.layout_data')->getLayoutData(),
+            'command'=> $command,
+        ));
+    }
+
+    /**
      * @Route("/command/treated/{id}", name="treatCommand", requirements={"id"="\d+"}, options = { "expose" = true })
      * @Security("has_role('ROLE_PHARMA')")
      */
