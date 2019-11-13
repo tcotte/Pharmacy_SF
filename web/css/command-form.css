@@ -14,3 +14,7 @@ select.hidden {
 font-weight:bold;
 }
 
+.number-type{
+    padding-left: 0px;
+    padding-right:40px;
+}

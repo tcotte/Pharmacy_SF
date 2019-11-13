@@ -1,0 +1,19 @@
+{% extends "default/index.html.twig" %}
+{% block content %}
+    {% block stylesheets %}
+        <link href="{{ asset('css/form.css') }}" rel="stylesheet"/>
+    {% endblock %}
+    <center>
+        <div id="container" class="col-md-5">
+
+            <h3>Ajout d'un profil</h3>
+            <div class="col-md-5">
+
+                {{ form(form) }}
+
+            </div>
+
+        </div>
+        </div>
+    </center>
+{% endblock %}

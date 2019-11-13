@@ -2,7 +2,7 @@
 {% block content %}
     <center>
         <h3>
-            Suivi de me mes commandes
+            Suivi de mes commandes
         </h3>
         <br>
         <div class="col-md-6">
@@ -22,6 +22,7 @@
                     <div class="card-body">
                         <h5 class="card-title">{{command.category.name}}</h5>
                         {% for product in command.commandProducts %}
+
                             {% if product.quantity > 0 %}
                                 <p class="card-text">
                                     <b>{{product.quantity}}</b>
@@ -29,6 +30,7 @@
                                     <b>{{product.product.designation}}</b>
                                 </p>
                             {% endif %}
+
                         {% endfor %}
                         <div class="row">
                             <a href="#" class="btn btn-primary">Voir le détail</a>

@@ -42,6 +42,9 @@
 				</div><br>
 
 			{% endfor %}
+			{% if listCommand is empty %}
+				<p> Aucune nouvelle commande pour le moment</p>
+			{% endif %}
 		</div>
 	</center>
 	<style>

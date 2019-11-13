@@ -46,7 +46,7 @@ class Command
     private $creationDate;
 
     /**
-     * @ORM\Column(name="treatmentDate", type="datetime")
+     * @ORM\Column(name="treatmentDate", type="datetime", nullable=true)
      */
     private $treatmentDate;
 
@@ -210,5 +210,29 @@ class Command
     public function getUser()
     {
         return $this->user;
+    }
+
+    /**
+     * Set treatmentDate
+     *
+     * @param \DateTime $treatmentDate
+     *
+     * @return Command
+     */
+    public function setTreatmentDate($treatmentDate)
+    {
+        $this->treatmentDate = $treatmentDate;
+
+        return $this;
+    }
+
+    /**
+     * Get treatmentDate
+     *
+     * @return \DateTime
+     */
+    public function getTreatmentDate()
+    {
+        return $this->treatmentDate;
     }
 }

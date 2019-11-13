@@ -24,10 +24,12 @@ use PlatformBundle\Repository\ProductRepository;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Response;
-
+use UserBundle\Form\ProfileFormType;
 
 class DefaultController extends Controller
 {
+
+
     /**
      * @Route("/app", name="app")
      */

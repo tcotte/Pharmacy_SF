@@ -46,7 +46,7 @@ class Command
     private $creationDate;
 
     /**
-     * @ORM\Column(name="treatmentDate", type="datetime")
+     * @ORM\Column(name="treatmentDate", type="datetime", nullable=true)
      */
     private $treatmentDate;
 

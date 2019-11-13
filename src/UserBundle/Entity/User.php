@@ -19,12 +19,12 @@ class User extends BaseUser
     protected $id;
 
     /**
-     * @ORM\Column(name="firstName", type="string")
+     * @ORM\Column(name="firstName", type="string", nullable=true)
      */
     protected $firstName;
 
     /**
-     * @ORM\Column(name="lastName", type="string")
+     * @ORM\Column(name="lastName", type="string", nullable=true)
      */
     protected $lastName;
 
