@@ -63,10 +63,19 @@ class DefaultController extends Controller
      */
     public function showDetailsAction(Command $command)
     {
-        dump($command);
+        $em = $this->getDoctrine()->getManager();
+        $totalPrice = 0;
+        $listProduct = $command->getCommandProducts();
+        foreach ($listProduct as $product){
+            $price = $product->getProduct()->getPrice();
+            $quantity = $product->getQuantity();
+            $totalPrice += $price*$quantity;
+        }
+
         return $this->render('@Platform/Default/commandDetails.html.twig', array(
             'listCategory' => $this->get('app_service.layout_data')->getLayoutData(),
             'command'=> $command,
+            'totalPrice'=>$totalPrice,
         ));
     }
 
