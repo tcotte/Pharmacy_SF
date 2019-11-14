@@ -18,6 +18,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Response;
 use UserBundle\Form\ProfileFormType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 
 class DefaultController extends Controller
 {
@@ -221,4 +222,64 @@ class DefaultController extends Controller
             'form' => $form->createView()
         ));
     }
+
+    /**
+     * @Route("/excel", name="excel")
+     */
+    public function excelAction(){
+        $user = $this->getUser();
+        $id = 23;
+        $em = $this->getDoctrine()->getManager();
+        $command = $em->getRepository(Command::class)->findOneById($id);
+        $listProduct = $command->getCommandProducts();
+        dump($listProduct);
+
+        $phpExcelObject = $this->get('phpexcel')->createPHPExcelObject();
+        $phpExcelObject->getProperties()->setCreator($user->getUsername())
+            ->setLastModifiedBy($user->getUsername())
+            ->setTitle("Commande n°".$id)
+            ->setSubject("Office 2005 XLSX Test Document")
+            ->setDescription("Test document for Office 2005 XLSX, generated using PHP classes.")
+            ->setKeywords("office 2005 openxml php")
+            ->setCategory("Test result file");
+        $sheet = $phpExcelObject->setActiveSheetIndex(0);
+        $sheet->setCellValue('A1', 'Désignation');
+        $sheet->setCellValue('B1', 'Fournisseur');
+        $sheet->setCellValue('C1', 'Référence');
+        $sheet->setCellValue('D1', 'Code');
+        $sheet->setCellValue('E1', 'Marché');
+        $sheet->setCellValue('F1', 'Conditionnement');
+        $sheet->setCellValue('G1', 'Prix');
+
+        $counter = 2;
+        foreach ($listProduct as $product){
+            $sheet->setCellValue('A' . $counter, $product->getProduct()->getDesignation());
+            $sheet->setCellValue('B' . $counter, $product->getProduct()->getSupplier());
+            $sheet->setCellValue('C' . $counter, $product->getProduct()->getReference());
+            $sheet->setCellValue('D' . $counter, $product->getProduct()->getCode());
+            $sheet->setCellValue('E' . $counter, $product->getProduct()->getMarket());
+            $sheet->setCellValue('F' . $counter, $product->getProduct()->getCdt());
+            $sheet->setCellValue('G' . $counter, $product->getProduct()->getPrice());
+            $counter++;
+        }
+
+//        foreach($sheet->getColumnDimension() as $col) {
+//            $col->setAutoSize(true);
+//        }
+//        $sheet->calculateColumnWidths();
+
+        $phpExcelObject->getActiveSheet()->setTitle("Commande ".$id);
+        // Set active sheet index to the first sheet, so Excel opens this as the first sheet
+        $phpExcelObject->setActiveSheetIndex(0);
+
+        // create the writer
+        $writer = $this->get('phpexcel')->createWriter($phpExcelObject, 'Excel2007');
+        // The save method is documented in the official PHPExcel library
+        $writer->save('C:\Users\Trist\Desktop\test\command'.$id.'.xlsx');
+
+
+        // Return a Symfony response
+        return new Response("A symfony response");
+    }
+
 }
