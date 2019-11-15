@@ -3,7 +3,7 @@
 {% set currentPath = path(app.request.attributes.get('_route'),app.request.attributes.get('_route_params')) %}
 
 <center>
-    <div class="col-md-4 col-sm-6">
+    <div class="col-md-8 col-sm-8">
 
 {{ form_start(form, {'method': 'post', 'action': path('fos_user_registration_register'), 'attr': {'class': 'fos_user_registration_register'}}) }}
     {{ form_widget(form) }}

@@ -2,7 +2,7 @@
 {% set currentPath = path(app.request.attributes.get('_route'),app.request.attributes.get('_route_params')) %}
 
 <center>
-    <div class="col-md-4 col-sm-6">
+    <div class="col-md-10 col-sm-10">
 
 
         {% if currentPath ends with 'profile/edit' %}
@@ -22,10 +22,6 @@
             {{ form_start(form, { 'action': path('editProfile', { 'id': form.vars.value.id }), 'attr': { 'class': 'fos_user_profile_edit' } }) }}
         {% endif %}
         {{ form_widget(form) }}
-        <br>
-        {# <div>
-            <input type="submit" class="btn btn-primary" value="{{ 'profile.edit.submit'|trans }}"/>
-        </div> #}
         {{ form_end(form) }}
 
     </div>

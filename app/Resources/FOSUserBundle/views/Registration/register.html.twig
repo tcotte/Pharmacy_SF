@@ -2,18 +2,11 @@
 
 {% block fos_user_content %}
 
-<center><div class="col-md-8 col-sm-8">
-{% include "@Platform/appFlashes.html.twig"%}
-</div></center>
-
-<center><div class="col-md-4 col-sm-6">
-
-
-        <h1>
-            Ajouter un profil
-        </h1>
-        <hr>
-        
-        <br>
-{{ form(form) }}</center>
+        <center>
+            <div class="col-md-4">
+                <div class="card" id="card-password">
+                    {% include "@FOSUser/Registration/register_content.html.twig" %}
+                </div>
+            </div>
+        </center>
 {% endblock fos_user_content %}

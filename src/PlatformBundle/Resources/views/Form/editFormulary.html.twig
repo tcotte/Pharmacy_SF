@@ -7,7 +7,7 @@
     <center>
         <div id="container" class="col-md-11">
 
-            <h3>Modification d'un formulaire</h3>
+            <h3 attr-id="{{ category.id }}">Modification du formulaire {{ category.name }}</h3>
             {%
                     form_theme form
                     'bootstrap_4_layout.html.twig'
@@ -16,9 +16,17 @@
             {{ form_end(form)}}
 
         </div>
-
-    </div>
-</center>{% endblock %}{% block javascripts %}
+    </center>
+    <button class="btn btn-danger col-md-1 offset-md-1" id="remove-form">Supprimer</button>
+{% include "others/modalDelete.html.twig" %}
+    <style>
+        #remove-form{
+            margin-top:10px;
+            margin-bottom:10px;
+        }
+    </style>
+{% endblock %}
+{% block javascripts %}
 <script src="{{ asset('js/jquery.collection.js') }}"></script>
 <script type="text/javascript">
 
@@ -28,5 +36,35 @@
         add: '<a href="#" class="btn btn-primary"><i class="fas fa-plus-circle"></i></a>',
         remove: '<a href="#" class="btn btn-danger"><i class="fas fa-trash-alt"></i></a>',
         // allow_duplicate: true
+    });
+
+
+    $(document).ready(function () {
+
+        $("#remove-form").click(function (e) {
+            e.preventDefault();
+            theHREF = $(this).attr("href");
+            $("#confirmModal").modal("show");
+        });
+
+        $("#confirmModalNo").click(function (e) {
+            $("#confirmModal").modal("hide");
+        });
+
+        $("#confirmModalYes").click(function (e) {
+            let categoryId = $('h3').attr('attr-id');
+            $.ajax({
+                url: Routing.generate('deleteFormulary', { id: categoryId}),
+                type: 'GET',
+                success: function (data) {
+                    $("#confirmModal").modal("hide");
+                    window.document.location = Routing.generate('app');
+                    // alert(data);
+                },
+                error: function () {
+                    alert('La requête n\'a pas abouti');
+                }
+            });
+        });
     });
 </script>{% endblock %}

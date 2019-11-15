@@ -25,7 +25,7 @@ class DefaultController extends Controller
 
 
     /**
-     * @Route("/app", name="app")
+     * @Route("/app", name="app", options = { "expose" = true })
      * @Security("has_role('ROLE_USER')")
      */
     public function indexAction()
@@ -190,7 +190,6 @@ class DefaultController extends Controller
     public function editFormularyAction(Category $category, Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        // $category = $em->getRepository('PlatformBundle:Category')->findOneById($id);
 
         $originalProducts = new ArrayCollection();
 
@@ -224,6 +223,24 @@ class DefaultController extends Controller
     }
 
     /**
+     * @Method("GET")
+     * @Route("/deleteFormulary/{id}", name="deleteFormulary", requirements={"id"="\d+"}, options = { "expose" = true })
+     * @Security("has_role('ROLE_PHARMA')")
+     */
+    public function deleteFormularyAction($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $category = $em->getRepository(Category::class)->findOneById($id);
+        $em->remove($category);
+        $em->flush();
+        $this->addFlash('alert', 'Le formulaire '.$category->getName().' a bien été supprimée !');
+        
+        return new Response("Vous avez supprimé le formulaire ".$category->getName());
+    }
+
+
+
+    /**
      * @Route("/excel/{id}", name="excel", requirements={"id"="\d+"}, options = { "expose" = true })
      * @Security("has_role('ROLE_USER')")
      */
@@ -242,22 +259,24 @@ class DefaultController extends Controller
 
         $sheet = $phpExcelObject->setActiveSheetIndex(0);
         $sheet->setCellValue('A1', 'Désignation');
-        $sheet->setCellValue('B1', 'Fournisseur');
-        $sheet->setCellValue('C1', 'Référence');
-        $sheet->setCellValue('D1', 'Code');
-        $sheet->setCellValue('E1', 'Marché');
-        $sheet->setCellValue('F1', 'Conditionnement');
-        $sheet->setCellValue('G1', 'Prix');
+        $sheet->setCellValue('B1', 'Quantité');
+        $sheet->setCellValue('C1', 'Fournisseur');
+        $sheet->setCellValue('D1', 'Référence');
+        $sheet->setCellValue('E1', 'Code');
+        $sheet->setCellValue('F1', 'Marché');
+        $sheet->setCellValue('G1', 'Conditionnement');
+        $sheet->setCellValue('H1', 'Prix');
 
         $counter = 3;
         foreach ($listProduct as $product){
             $sheet->setCellValue('A' . $counter, $product->getProduct()->getDesignation());
-            $sheet->setCellValue('B' . $counter, $product->getProduct()->getSupplier());
-            $sheet->setCellValue('C' . $counter, $product->getProduct()->getReference());
-            $sheet->setCellValue('D' . $counter, $product->getProduct()->getCode());
-            $sheet->setCellValue('E' . $counter, $product->getProduct()->getMarket());
-            $sheet->setCellValue('F' . $counter, $product->getProduct()->getCdt());
-            $sheet->setCellValue('G' . $counter, $product->getProduct()->getPrice());
+            $sheet->setCellValue('B' . $counter, $product->getQuantity());
+            $sheet->setCellValue('C' . $counter, $product->getProduct()->getSupplier());
+            $sheet->setCellValue('D' . $counter, $product->getProduct()->getReference());
+            $sheet->setCellValue('E' . $counter, $product->getProduct()->getCode());
+            $sheet->setCellValue('F' . $counter, $product->getProduct()->getMarket());
+            $sheet->setCellValue('G' . $counter, $product->getProduct()->getCdt());
+            $sheet->setCellValue('H' . $counter, $product->getProduct()->getPrice());
             $counter++;
         }
 
