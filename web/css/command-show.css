@@ -1,0 +1,25 @@
+.products-text{
+    display:block;
+    margin:auto;
+}
+h3, .card-title, .card-footer{
+    text-align: center;
+}
+.btn-success {
+    position: absolute;
+    right: 0.4rem;
+    top: 0.4rem;
+}
+.btn-danger {
+    position: absolute;
+    right: 0.4rem;
+    top: 0.4rem;
+}
+
+.btn-primary {
+    margin-left: 30px;
+    margin-top:20px;
+}
+h3 {
+    margin-top: 20px;
+}

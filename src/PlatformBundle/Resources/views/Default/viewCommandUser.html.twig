@@ -1,11 +1,13 @@
 {% extends "default/index.html.twig" %}
 {% block content %}
-    <center>
+    {% block stylesheets %}
+        <link rel="stylesheet" href="{{ asset('css/command-show.css') }}"></link>
+    {% endblock %}
         <h3>
             Suivi de mes commandes
         </h3>
         <br>
-        <div class="col-md-6">
+        <div class="col-md-6 offset-md-3">
             {% if listCommand is empty %}
             <p>Vous n'avez pas créé de commande récemment</p>
             {% endif %}
@@ -14,9 +16,11 @@
                 <div class="card border-success" attr-id="{{ command.id }}">
                     <div class="card-header">
                         <div class="inline">
+                            <div class="card-title">
                             Commande n°{{command.id}}
                             -
                             {{command.user.username}}
+                            </div>
                             <div href="#" class="btn btn-success">
                                 <i class="far fa-calendar-check"></i>
                             </div>
@@ -24,21 +28,22 @@
                     </div>
                     <div class="card-body">
                         <h5 class="card-title">{{command.category.name}}</h5>
-                        {% for product in command.commandProducts %}
+                        <div class="products-text col-md-8">
+                            {% for product in command.commandProducts %}
 
-                            {% if product.quantity > 0 %}
-                                <p class="card-text">
-                                    <b>{{product.quantity}}</b>
-                                    x
-                                    <b>{{product.product.designation}}</b>
-                                </p>
-                            {% endif %}
+                                {% if product.quantity > 0 %}
+                                    <p class="card-text">
+                                        <b>{{product.quantity}}</b>
+                                        x
+                                        <b>{{product.product.designation}}</b>
+                                    </p>
 
-                        {% endfor %}
+                                {% endif %}
+
+                            {% endfor %}
+                        </div>
                         <div class="row">
                             <a href="{{path('commandDetails', {'id': command.id }) }}" class="btn btn-primary">Voir le détail</a>
-
-
                         </div>
                     </div>
                     <div class="card-footer">
@@ -52,9 +57,11 @@
                     <div class="card border-danger" attr-id="{{ command.id }}">
                         <div class="card-header">
                             <div class="inline">
+                                <div class="card-title">
                                 Commande n°{{command.id}}
                                 -
                                 {{command.user.username}}
+                                </div>
                                 <div href="#" class="btn btn-danger">
                                     <i class="far fa-calendar-times"></i>
                                 </div>
@@ -62,6 +69,7 @@
                         </div>
                         <div class="card-body">
                             <h5 class="card-title">{{command.category.name}}</h5>
+                            <div class="products-text col-md-8">
                             {% for product in command.commandProducts %}
                                 {% if product.quantity > 0 %}
                                     <p class="card-text">
@@ -71,6 +79,7 @@
                                     </p>
                                 {% endif %}
                             {% endfor %}
+                            </div>
                             <div class="row">
                                 <a href="{{path('commandDetails', {'id': command.id }) }}" class="btn btn-primary">Voir le détail</a>
 
@@ -86,28 +95,8 @@
                 {% endif %}
             {% endfor %}
         </div>
-    </center>
-    <style>
-        .btn-success {
-            position: absolute;
-            right: 0.4rem;
-            top: 0.4rem;
-        }
-        .btn-danger {
-            position: absolute;
-            right: 0.4rem;
-            top: 0.4rem;
-        }
 
-        .btn-primary {
-            margin-left: 40px;
-        }
-        h3 {
-            margin-top: 20px;
-        }
 
-    </style>
 {% endblock %}
 {% block javascripts %}
-
 {% endblock %}

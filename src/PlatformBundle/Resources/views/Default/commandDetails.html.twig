@@ -1,6 +1,10 @@
 {% extends "default/index.html.twig" %}
+
 {% block content %}
-    <div class='form-inline' style="margin-top:40px;">
+    {% block stylesheets %}
+        <link href="{{ asset('css/command-details.css') }}" rel="stylesheet"/>
+    {% endblock %}
+    <div class='form-inline'>
         <div class='col-md-5 offset md-1'>
             <center>
                 <h3 attr-id="{{ command.id }}">Commande n°{{ command.id }} - {{ command.category.name }} </h3><hr>
@@ -44,14 +48,6 @@
         <br>
         <button class="btn btn-success" id="excel_button">Excel <i class="fas fa-file-download"></i></button>
     </div>
-<style>
-    #excel_button{
-        margin-top: 40px;
-    }
-    .fa-file-download{
-        margin-left:5px;
-    }
-</style>
 
 {% endblock %}
 {% block javascripts %}
