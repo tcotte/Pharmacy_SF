@@ -3,7 +3,7 @@
     <div class='form-inline' style="margin-top:40px;">
         <div class='col-md-5 offset md-1'>
             <center>
-                <h3>Commande n°{{ command.id }} - {{ command.category.name }} </h3><hr>
+                <h3 attr-id="{{ command.id }}">Commande n°{{ command.id }} - {{ command.category.name }} </h3><hr>
             </center>
         </div>
     </div>
@@ -41,8 +41,19 @@
         </table>
         <br>
         <b>Prix total de la commande : {{ totalPrice|number_format(2) }} €</b>
+        <br>
+        <button class="btn btn-success" id="excel_button">Excel <i class="fas fa-file-download"></i></button>
     </div>
-    <br>
+<style>
+    #excel_button{
+        margin-top: 40px;
+    }
+    .fa-file-download{
+        margin-left:5px;
+    }
+</style>
 
-
+{% endblock %}
+{% block javascripts %}
+    <script src="{{ asset('js/excel.js') }}"></script>
 {% endblock %}

@@ -224,11 +224,11 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Route("/excel", name="excel")
+     * @Route("/excel/{id}", name="excel", requirements={"id"="\d+"}, options = { "expose" = true })
+     * @Security("has_role('ROLE_USER')")
      */
-    public function excelAction(){
+    public function excelAction($id){
         $user = $this->getUser();
-        $id = 23;
         $em = $this->getDoctrine()->getManager();
         $command = $em->getRepository(Command::class)->findOneById($id);
         $listProduct = $command->getCommandProducts();
@@ -238,10 +238,8 @@ class DefaultController extends Controller
         $phpExcelObject->getProperties()->setCreator($user->getUsername())
             ->setLastModifiedBy($user->getUsername())
             ->setTitle("Commande n°".$id)
-            ->setSubject("Office 2005 XLSX Test Document")
-            ->setDescription("Test document for Office 2005 XLSX, generated using PHP classes.")
-            ->setKeywords("office 2005 openxml php")
-            ->setCategory("Test result file");
+            ->setSubject("Office 2005 XLSX Test Document");
+
         $sheet = $phpExcelObject->setActiveSheetIndex(0);
         $sheet->setCellValue('A1', 'Désignation');
         $sheet->setCellValue('B1', 'Fournisseur');
@@ -251,7 +249,7 @@ class DefaultController extends Controller
         $sheet->setCellValue('F1', 'Conditionnement');
         $sheet->setCellValue('G1', 'Prix');
 
-        $counter = 2;
+        $counter = 3;
         foreach ($listProduct as $product){
             $sheet->setCellValue('A' . $counter, $product->getProduct()->getDesignation());
             $sheet->setCellValue('B' . $counter, $product->getProduct()->getSupplier());
@@ -263,10 +261,10 @@ class DefaultController extends Controller
             $counter++;
         }
 
-//        foreach($sheet->getColumnDimension() as $col) {
-//            $col->setAutoSize(true);
-//        }
-//        $sheet->calculateColumnWidths();
+        foreach(range('A','G') as $columnID) {
+            $phpExcelObject->getActiveSheet()->getColumnDimension($columnID)
+                ->setAutoSize(true);
+        }
 
         $phpExcelObject->getActiveSheet()->setTitle("Commande ".$id);
         // Set active sheet index to the first sheet, so Excel opens this as the first sheet
@@ -274,12 +272,9 @@ class DefaultController extends Controller
 
         // create the writer
         $writer = $this->get('phpexcel')->createWriter($phpExcelObject, 'Excel2007');
-        // The save method is documented in the official PHPExcel library
-        $writer->save('C:\Users\Trist\Desktop\test\command'.$id.'.xlsx');
+        $filename='C:\Users\Trist\Desktop\test\command'.$id.'.xlsx';
+        $writer->save($filename);
 
-
-        // Return a Symfony response
-        return new Response("A symfony response");
+        return new Response("Le fichier a été enregristré à ".$filename);
     }
-
 }
