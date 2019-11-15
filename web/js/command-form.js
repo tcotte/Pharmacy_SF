@@ -1,6 +1,4 @@
 
-
-
     $(document).ready(function () {
         $('.product-select').each(function (product) {
             let productId = $(this).val();
