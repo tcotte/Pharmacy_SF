@@ -9,7 +9,7 @@
         <br>
         <div class="col-md-6 offset-md-3">
             {% if listCommand is empty %}
-            <p>Vous n'avez pas créé de commande récemment</p>
+            <p id="no-command" style="text-align: center;">Vous n'avez pas créé de commande récemment</p>
             {% endif %}
             {% for command in listCommand %}
                 {% if command.treat == true %}

@@ -22,14 +22,14 @@ class CommandProduct
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="PlatformBundle\Entity\Command", fetch="EAGER", cascade={"persist","remove"})
-     * @ORM\JoinColumn(nullable=true)
+     * @ORM\ManyToOne(targetEntity="PlatformBundle\Entity\Command", fetch="EAGER", cascade={"persist", "remove"})
+     * @ORM\joinColumn(onDelete="SET NULL")
      */
     private $command;
 
     /**
-     * @ORM\ManyToOne(targetEntity="PlatformBundle\Entity\Product", fetch="EAGER", cascade={"persist", "remove"})
-     * @ORM\JoinColumn(nullable=true)
+     * @ORM\ManyToOne(targetEntity="PlatformBundle\Entity\Product", fetch="EAGER", cascade={"persist"})
+     * @ORM\joinColumn(onDelete="SET NULL")
      */
     private $product;
 

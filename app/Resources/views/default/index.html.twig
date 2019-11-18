@@ -30,10 +30,12 @@
                                 {{ category.name }}<br>
                             </a>
                         {% endfor %}
+                        {% if is_granted('ROLE_PHARMA') %}
                         <a class="text-white h6" href="{{ path('addFormulary') }}">
                             <i class="fas fa-plus"></i>
                             Ajouter un formulaire<br>
                         </a>
+                        {% endif %}
                     </div>
 
                     <div class="col-md-5 offset-md-1">

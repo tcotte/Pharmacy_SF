@@ -10,12 +10,13 @@ namespace PlatformBundle\Repository;
  */
 class CommandRepository extends \Doctrine\ORM\EntityRepository
 {
-    public function findByUser($user)
+    public function findByTreatementAndDate($days)
     {
         $qb = $this->createQueryBuilder('a');
 
-        $qb->where('a.user = :user')
-            ->setParameter('user', $user)
+        $qb->where('a.treat = :true')
+            ->where('a.treatmentDate < :date')
+            ->setParameter('date', new \Datetime('-' . $days . ' day'))
 
         ;
 

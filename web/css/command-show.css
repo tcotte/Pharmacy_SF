@@ -23,3 +23,7 @@ h3, .card-title, .card-footer{
 h3 {
     margin-top: 20px;
 }
+
+#no-command{
+    text-align: center;
+}

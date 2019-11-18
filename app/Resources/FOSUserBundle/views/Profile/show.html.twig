@@ -1,5 +1,11 @@
 {% extends "@FOSUser/layout.html.twig" %}
 
 {% block fos_user_content %}
-{% include "@FOSUser/Profile/show_content.html.twig" %}
+<center>
+    <div class="col-md-4">
+        <div class="card" id="card-password">
+            {% include "@FOSUser/Profile/show_content.html.twig" %}
+        </div>
+    </div>
+</center>
 {% endblock fos_user_content %}

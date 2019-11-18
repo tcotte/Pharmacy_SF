@@ -24,6 +24,7 @@ class DefaultController extends Controller
 {
 
 
+
     /**
      * @Route("/app", name="app", options = { "expose" = true })
      * @Security("has_role('ROLE_USER')")
@@ -33,6 +34,9 @@ class DefaultController extends Controller
         $em = $this->getDoctrine()->getManager();
         $user = $this->getUser();
         $listCommand = $em->getRepository(Command::class)->findByUserOrderDate($user);
+
+        $oldCommand = $this->get('platform.purge');
+        $oldCommand->purge();
 
         return $this->render('@Platform/Default/viewCommandUser.html.twig', array(
             'listCategory' => $this->get('app_service.layout_data')->getLayoutData(),
@@ -56,7 +60,7 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Route("/commandDetails/{id}", name="commandDetails", requirements={"id"="\d+"})
+     * @Route("/commandDetails/{id}", name="commandDetails")
      * * @ParamConverter("command", options={"mapping": {"id": "id"}})
      * @Security("has_role('ROLE_BLOC')")
      * @param Command $command
@@ -139,6 +143,22 @@ class DefaultController extends Controller
     }
 
     /**
+     * @Route("/excel/{id}", name="excel", requirements={"id"="\d+"}, options = { "expose" = true })
+     * @Security("has_role('ROLE_USER')")
+     */
+    public function excelAction($id){
+        $user = $this->getUser();
+        $em = $this->getDoctrine()->getManager();
+        $command = $em->getRepository(Command::class)->findOneById($id);
+        $listProduct = $command->getCommandProducts();
+
+        $excel = $this->get('platform.excelService');
+        $filename = $excel->generateExcel($id, $user, $listProduct);
+
+        return new Response("Le fichier a été enregristré à ".$filename);
+    }
+
+    /**
      * @Method("GET")
      * @Route("/productInfo/{id}", name="getProductInfo", requirements={"id"="\d+"}, options = { "expose" = true })
      * @Security("has_role('ROLE_USER')")
@@ -204,10 +224,8 @@ class DefaultController extends Controller
 
             foreach ($originalProducts as $product) {
                 if (false === $category->getProducts()->contains($product)) {
-
                     $em->persist($product);
                     $em->remove($product);
-
                 }
             }
             $em->persist($category);
@@ -240,19 +258,5 @@ class DefaultController extends Controller
 
 
 
-    /**
-     * @Route("/excel/{id}", name="excel", requirements={"id"="\d+"}, options = { "expose" = true })
-     * @Security("has_role('ROLE_USER')")
-     */
-    public function excelAction($id){
-        $user = $this->getUser();
-        $em = $this->getDoctrine()->getManager();
-        $command = $em->getRepository(Command::class)->findOneById($id);
-        $listProduct = $command->getCommandProducts();
 
-        $excel = $this->get('platform.excelService');
-        $filename = $excel->generateExcel($id, $user, $listProduct);
-
-        return new Response("Le fichier a été enregristré à ".$filename);
-    }
 }

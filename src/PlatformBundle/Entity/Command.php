@@ -24,14 +24,14 @@ class Command
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="PlatformBundle\Entity\Category", fetch="EAGER", cascade={"persist","remove"})
-     * @ORM\JoinColumn(nullable=true)
+     * @ORM\ManyToOne(targetEntity="PlatformBundle\Entity\Category", fetch="EAGER", cascade={"persist"})
+     * @ORM\JoinColumn(onDelete="SET NULL")
      */
     private $category;
 
     /**
-     * @ORM\ManyToOne(targetEntity="UserBundle\Entity\User", fetch="EAGER", cascade={"persist","remove"})
-     * @ORM\JoinColumn(nullable=true)
+     * @ORM\ManyToOne(targetEntity="UserBundle\Entity\User", fetch="EAGER", cascade={"persist"})
+     * @ORM\JoinColumn(onDelete="SET NULL")
      */
     private $user;
 

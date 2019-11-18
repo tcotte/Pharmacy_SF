@@ -5,4 +5,7 @@ services:
     platform.excelService:
         class: PlatformBundle\Services\ExcelService
         arguments: ['@phpexcel']
-#        arguments: ['@phpexcel']
+
+    platform.purge:
+        class: PlatformBundle\Services\PurgeService
+        arguments: ['@doctrine.orm.entity_manager', 60]
