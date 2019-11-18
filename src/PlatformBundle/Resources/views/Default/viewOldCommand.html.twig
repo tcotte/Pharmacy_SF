@@ -1,0 +1,61 @@
+{% extends "default/index.html.twig" %}
+{% block content %}
+    {% block stylesheets %}
+        <link rel="stylesheet" href="{{ asset('css/command-show.css') }}"></link>
+    {% endblock %}
+        <h3>
+            Archives
+        </h3>
+        <br>
+        <div class="col-md-6 offset-md-3">
+            {% if listCommand is empty %}
+            <p id="no-command" style="text-align: center;">Pas d'archives à ce jour</p>
+            {% endif %}
+            {% for command in listCommand %}
+
+                <div class="card border-info" attr-id="{{ command.id }}">
+                    <div class="card-header">
+                        <div class="inline">
+                            <div class="card-title">
+                            Commande n°{{command.id}}
+                            -
+                            {{command.user.username}}
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">{{command.category.name}}</h5>
+                        <div class="products-text col-md-8">
+                            {% for product in command.commandProducts %}
+
+                                {% if product.quantity > 0 %}
+                                    <p class="card-text">
+                                        <b>{{product.quantity}}</b>
+                                        x
+                                        <b>{{product.product.designation}}</b>
+                                    </p>
+
+                                {% endif %}
+
+                            {% endfor %}
+                        </div>
+                        <div class="row">
+                            <a href="{{path('commandDetails', {'id': command.id }) }}" class="btn btn-primary">Voir le détail</a>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        Demandée le
+                        {{command.creationDate|date("d/m/Y")}} ---
+                        Traitée le {{command.treatmentDate|date("d/m/Y")}}
+                    </div>
+                </div><br>
+
+
+            {% endfor %}
+        </div>
+
+
+{% endblock %}
+{% block javascripts %}
+{% endblock %}

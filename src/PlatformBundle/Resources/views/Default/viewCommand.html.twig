@@ -1,62 +1,63 @@
 {% extends "default/index.html.twig" %}
 
 {% block content %}
-	{% block stylesheets %}
-		<link rel="stylesheet" href="{{ asset('css/command-show.css') }}"></link>
-	{% endblock %}
-		<h3>
-			Suivi des commandes
-		</h3>
-		<br>
-		<div class="col-md-6 offset-md-3">
-			{% for command in listCommand %}
-				<div class="card border-dark" attr-id="{{ command.id }}">
-					<div class="card-header">
-						<div class="inline">
-							<div class="card-title">
-							Commande n°{{command.id}}
-							-
-							{{command.user.username}}
-							</div>
-							<a href="#" class="btn btn-success">
-								<i class="fas fa-check"></i>
-							</a>
-						</div>
-					</div>
-					<div class="card-body">
-						<h5 class="card-title">{{command.category.name}}</h5>
-						<div class="products-text col-md-8">
-							{% for product in command.commandProducts %}
+    {% block stylesheets %}
+        <link rel="stylesheet" href="{{ asset('css/command-show.css') }}"></link>
+    {% endblock %}
+    <h3>
+        Suivi des commandes
+    </h3>
+    <br>
+    <div class="col-md-6 offset-md-3">
+        {% for command in listCommand %}
+            <div class="card border-dark" attr-id="{{ command.id }}">
+                <div class="card-header">
+                    <div class="inline">
+                        <div class="card-title">
+                            Commande n°{{ command.id }}
+                            -
+                            {{ command.user.username }}
+                        </div>
+                        <a href="#" class="btn btn-success">
+                            <i class="fas fa-check"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">{{ command.category.name }}</h5>
+                    <div class="products-text col-md-8">
+                        {% for product in command.commandProducts %}
 
-								{% if product.quantity > 0 %}
-									<p class="card-text">
-										<b>{{product.quantity}}</b>
-										x
-										<b>{{product.product.designation}}</b>
-									</p>
-								{% endif %}
-							{% endfor %}
-						</div>
-						<div class="row">
-							<a href="{{path('commandDetails', {'id': command.id }) }}" class="btn btn-primary">Voir le détail</a>
+                            {% if product.quantity > 0 %}
+                                <p class="card-text">
+                                    <b>{{ product.quantity }}</b>
+                                    x
+                                    <b>{{ product.product.designation }}</b>
+                                </p>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                    <div class="row">
+                        <a href="{{ path('commandDetails', {'id': command.id }) }}" class="btn btn-primary">Voir le
+                            détail</a>
 
 
-						</div>
-					</div>
-					<div class="card-footer">
-						Demandée le
-						{{command.creationDate|date("d/m/Y")}}
-					</div>
-				</div><br>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    Demandée le
+                    {{ command.creationDate|date("d/m/Y") }}
+                </div>
+            </div><br>
 
-			{% endfor %}
-			{% if listCommand is empty %}
-				<p> Aucune nouvelle commande pour le moment</p>
-			{% endif %}
-		</div>
-
+        {% endfor %}
+        {% if listCommand is empty %}
+            <p id="zero-command"> Aucune nouvelle commande pour le moment</p>
+        {% endif %}
+    </div>
+    <a class="stretched-link text-danger" id="records" href="{{ path('viewOldCommand') }}">Archives >></a>
 
 {% endblock %}
 {% block javascripts %}
-	<script src="{{ asset('js/command.js') }}"></script>
+    <script src="{{ asset('js/command.js') }}"></script>
 {% endblock %}

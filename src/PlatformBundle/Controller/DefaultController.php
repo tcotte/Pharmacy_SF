@@ -53,7 +53,23 @@ class DefaultController extends Controller
         $em = $this->getDoctrine()->getManager();
         $listCommand = $em->getRepository('PlatformBundle:Command')->findByTreatmentOrderDate();
 
+
         return $this->render('@Platform/Default/viewCommand.html.twig', array(
+            'listCategory' => $this->get('app_service.layout_data')->getLayoutData(),
+            'listCommand' => $listCommand,
+        ));
+    }
+
+    /**
+     * @Route("/oldCommand", name="viewOldCommand")
+     * @Security("has_role('ROLE_PHARMA')")
+     */
+    public function viewOldCommandAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $listCommand = $em->getRepository('PlatformBundle:Command')->findByTreatedOrderDate();
+
+        return $this->render('@Platform/Default/viewOldCommand.html.twig', array(
             'listCategory' => $this->get('app_service.layout_data')->getLayoutData(),
             'listCommand' => $listCommand,
         ));

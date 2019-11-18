@@ -40,6 +40,20 @@ class CommandRepository extends \Doctrine\ORM\EntityRepository
             ;
     }
 
+    public function findByTreatedOrderDate()
+    {
+        $qb = $this->createQueryBuilder('a');
+
+        $qb->where('a.treat = true')
+            ->orderBy('a.creationDate', 'DESC')
+        ;
+
+        return $qb
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
     public function findByUserOrderDate($user)
     {
         $qb = $this->createQueryBuilder('a');

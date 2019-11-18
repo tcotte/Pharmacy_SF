@@ -27,3 +27,15 @@ h3 {
 #no-command{
     text-align: center;
 }
+
+.zero-command{
+    text-align: center;
+}
+
+#records {
+    position: absolute;
+    right: 5%;
+    bottom: 5%;
+    font-size: 20px;
+    font-weight: bold;
+}
