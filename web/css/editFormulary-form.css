@@ -15,3 +15,11 @@ div[id^="platformbundle_category_products_"] div.form-group:nth-child(1) > label
 legend {
     display: none;
 }
+
+#remove-form{
+    float:right;
+}
+#platformbundle_category_Valider{
+    display: block;
+    margin : auto;
+}

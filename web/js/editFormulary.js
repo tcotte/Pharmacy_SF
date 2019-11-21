@@ -8,6 +8,9 @@ $('.product-collection').collection({
 
 $(document).ready(function () {
 
+    let btnValid = $('#platformbundle_category_Valider');
+    btnValid.after('<button class="btn btn-danger" id="remove-form">Supprimer</button>');
+
     $("#remove-form").click(function (e) {
         e.preventDefault();
         theHREF = $(this).attr("href");
@@ -34,7 +37,5 @@ $(document).ready(function () {
         });
     });
 
-    let btnValid = $('#platformbundle_category_Valider');
-    btnValid.after('<button class="btn btn-danger" id="remove-form">Supprimer</button>');
 
 });
