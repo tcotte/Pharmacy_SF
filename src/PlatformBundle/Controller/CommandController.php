@@ -2,14 +2,14 @@
 
 namespace PlatformBundle\Controller;
 
-
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use PlatformBundle\Entity\Command;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Response;
-use UserBundle\Form\ProfileFormType;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 
 /**
@@ -33,6 +33,36 @@ class CommandController extends Controller
             'listCommand' => $listCommand,
         ));
     }
+
+    /**
+     * @Route("/spreadsheet/{id}", name="spreadsheet", requirements={"id"="\d+"})
+     * @Security("has_role('ROLE_BLOC')")
+     * @param $id
+     * @return StreamedResponse
+     */
+    public function spreadsheetAction($id)
+    {
+        $user = $this->getUser();
+        $em = $this->getDoctrine()->getManager();
+        $command = $em->getRepository(Command::class)->find($id);
+        $listProduct = $command->getCommandProducts();
+
+        $returnExcel = $this->get('platform.excelService')->generateExcel($id, $user, $listProduct);
+        $phpExcelObject = $returnExcel['phpExcelObject'];
+        $filename = $returnExcel['filename'];
+
+        //Output response
+        $streamedResponse = new StreamedResponse();
+        $streamedResponse->setCallback(function () use ($phpExcelObject) {
+            $writer = new Xlsx($phpExcelObject);
+            $writer->save('php://output');
+        });
+        $streamedResponse->setStatusCode(200);
+        $streamedResponse->headers->set('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        $streamedResponse->headers->set('Content-Disposition', 'attachment; filename='.$filename.'.xlsx');
+        return $streamedResponse->send();
+    }
+
 
     /**
      * @Route("/oldCommand", name="viewOldCommand")

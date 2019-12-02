@@ -1,18 +1,27 @@
 <?php
 
 namespace PlatformBundle\Services;
-use PHPExcel;
-use PHPExcel_IOFactory;
 
+use Yectep\PhpSpreadsheetBundle\Factory;
 
 class ExcelService
 {
 
+    private $spreadSheet;
+
+    public function __construct(Factory $spreadSheet)
+    {
+        $this->spreadSheet = $spreadSheet;
+    }
+
     public function generateExcel($id, $user, $listProduct){
-        $phpExcelObject = new PHPExcel();
+
+        $phpExcelObject = $this->spreadSheet->createSpreadsheet();
+        $sheet = $phpExcelObject->getActiveSheet();
+
         $phpExcelObject->getProperties()->setCreator($user->getUsername())
             ->setLastModifiedBy($user->getUsername())
-            ->setTitle("Commande n")
+            ->setTitle("Commande ".$id)
             ->setSubject("Office 2005 XLSX Test Document");
 
         $sheet = $phpExcelObject->setActiveSheetIndex(0);
@@ -43,14 +52,13 @@ class ExcelService
                 ->setAutoSize(true);
         }
 
-        $phpExcelObject->getActiveSheet()->setTitle("Commande");
-        // Set active sheet index to the first sheet, so Excel opens this as the first sheet
         $phpExcelObject->setActiveSheetIndex(0);
 
-        // create the writer
-        $writer = PHPExcel_IOFactory::createWriter($phpExcelObject, 'Excel2007');
-        $filename='C:\Users\Trist\Desktop\test\command'.$id.'.xlsx';
-        $writer->save($filename);
-        return $filename;
+        $filename='Commande_n'.$id;
+
+        return array(
+            'filename' => $filename,
+            'phpExcelObject' => $phpExcelObject
+        );
     }
 }
