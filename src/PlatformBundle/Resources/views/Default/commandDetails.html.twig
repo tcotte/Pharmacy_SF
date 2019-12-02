@@ -46,10 +46,12 @@
         <br>
         <b>Prix total de la commande : {{ totalPrice|number_format(2) }} €</b>
         <br>
-        <button class="btn btn-success" id="excel_button">Excel <i class="fas fa-file-download"></i></button>
+        <a href="{{ path('spreadsheet', {id: command.id}) }}">
+            <button class="btn btn-success" id="excel_button">Excel <i class="fas fa-file-download"></i></button>
+        </a>
     </div>
 
 {% endblock %}
 {% block javascripts %}
-    <script src="{{ asset('js/excel.js') }}"></script>
+{#    <script src="{{ asset('js/excel.js') }}"></script>#}
 {% endblock %}
