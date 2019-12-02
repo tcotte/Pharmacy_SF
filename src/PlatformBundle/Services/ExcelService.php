@@ -8,7 +8,6 @@ use PHPExcel_IOFactory;
 class ExcelService
 {
 
-
     public function generateExcel($id, $user, $listProduct){
         $phpExcelObject = new PHPExcel();
         $phpExcelObject->getProperties()->setCreator($user->getUsername())

@@ -34,13 +34,6 @@ class ProductType extends AbstractType
             ->add('cdt', NumberType::class, array(
                 'label' => 'CDT'
             ));
-        // ->add('category', EntityType::class, [
-        //     'class' => 'PlatformBundle:Category',
-        //     'choice_label' => 'name',
-        //     'multiple' => false,
-        //     'expanded' => false,
-        // ])
-        // ->add('save',      SubmitType::class);
     }
     /**
      * {@inheritdoc}
