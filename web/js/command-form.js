@@ -1,5 +1,4 @@
-
-    $(document).ready(function () {
+ $(document).ready(function () {
         $('.product-select').each(function (product) {
             let productId = $(this).val();
             let productSelect = $(this);
@@ -14,7 +13,7 @@
                     "</div><div class='col-md-2'>" +
                     product.reference +
                     "</div><div class='col-md-2'>" +
-                    product.price + "€" +
+                    product.price.toFixed(2) + "€" +
                     "</div><div class='col-md-2'>" +
                     product.cdt +
                     "</div></div>"

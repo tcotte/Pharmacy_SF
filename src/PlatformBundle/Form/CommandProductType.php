@@ -35,7 +35,7 @@ class CommandProductType extends AbstractType
                     'class' => 'quantity-select'
                 ],
                 'label' => false,
-            ]);;
+            ]);
     }/**
      * {@inheritdoc}
      */
