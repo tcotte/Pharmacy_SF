@@ -1,9 +1,11 @@
 {% extends "default/index.html.twig" %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/command-show.css') }}"></link>
+{% endblock %}
 {% block content %}
-    {% block stylesheets %}
-        <link rel="stylesheet" href="{{ asset('css/command-show.css') }}"></link>
-    {% endblock %}
+
     <h3>
         Suivi des commandes
     </h3>

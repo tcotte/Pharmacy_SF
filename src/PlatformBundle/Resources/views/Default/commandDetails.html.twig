@@ -1,9 +1,11 @@
 {% extends "default/index.html.twig" %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="{{ asset('css/command-details.css') }}" rel="stylesheet"/>
+{% endblock %}
 {% block content %}
-    {% block stylesheets %}
-        <link href="{{ asset('css/command-details.css') }}" rel="stylesheet"/>
-    {% endblock %}
+
     <div class='form-inline'>
         <div class='col-md-5 offset md-1'>
             <center>

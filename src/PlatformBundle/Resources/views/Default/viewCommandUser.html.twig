@@ -1,15 +1,18 @@
 {% extends "default/index.html.twig" %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/command-show.css') }}"></link>
+{% endblock %}
+
 {% block content %}
-    {% block stylesheets %}
-        <link rel="stylesheet" href="{{ asset('css/command-show.css') }}"></link>
-    {% endblock %}
         <h3>
             Suivi de mes commandes
         </h3>
         <br>
         <div class="col-md-6 offset-md-3">
             {% if listCommand is empty %}
-            <p id="no-command" style="text-align: center;">Vous n'avez pas créé de commande récemment</p>
+            <p id="no-command">Vous n'avez pas créé de commande récemment</p>
             {% endif %}
             {% for command in listCommand %}
                 {% if command.treat == true %}

@@ -1,8 +1,10 @@
 {% extends "default/index.html.twig" %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="{{ asset('css/form.css') }}" rel="stylesheet"/>
+{% endblock %}
 {% block content %}
-    {% block stylesheets %}
-        <link href="{{ asset('css/form.css') }}" rel="stylesheet"/>
-    {% endblock %}
+
     <center>
         <div id="container" class="col-md-5">
 
