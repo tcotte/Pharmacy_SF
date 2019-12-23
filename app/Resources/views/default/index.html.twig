@@ -22,11 +22,13 @@
                 <div class="row">
                     <div class="col-md-5 offset-md-1">
                         <h5 class="text-white h4">Liste des formulaires</h5>
-                        {% for category in listCategory %}
-                            <a class="text-white h6" href="{{ path('viewFormulary', {'id': category.id }) }}">
-                                {{ category.name }}<br>
-                            </a>
-                        {% endfor %}
+{#                        {% if category is defined %}#}
+                            {% for category in listCategory %}
+                                <a class="text-white h6" href="{{ path('viewFormulary', {'id': category.id }) }}">
+                                    {{ category.name }}<br>
+                                </a>
+                            {% endfor %}
+{#                        {% endif %}#}
                         {% if is_granted('ROLE_PHARMA') %}
                         <a class="text-white h6" href="{{ path('addFormulary') }}">
                             <i class="fas fa-plus"></i>

@@ -8,7 +8,7 @@
                 <h3>Liste des Utilisateurs</h3><hr>
             </center>
         </div>
-        <div class="col-md-2 offset-md-3">
+        <div class="col-md-4 offset-md-3">
             <a type="button" class="btn btn-link btn-lg" href="{{ path('addProfile') }}">Ajouter utilisateur</a>
         </div>
 
@@ -40,7 +40,6 @@
                         Pharmacien
                     {% elseif "ROLE_BLOC" in user.roles %}
                         Infirmier
-
                     {% endif %}
                 </td>
 

@@ -188,9 +188,9 @@ class DefaultController extends Controller
         $category = $em->getRepository(Category::class)->findOneById($id);
         $em->remove($category);
         $em->flush();
-        $this->addFlash('alert', 'Le formulaire '.$category->getName().' a bien été supprimée !');
+        $this->addFlash('alert', 'Le formulaire "'.$category->getName().'" a bien été supprimé !');
         
-        return new Response("Vous avez supprimé le formulaire ".$category->getName());
+        return new Response('Vous avez supprimé le formulaire "'.$category->getName().'"');
     }
 
 }
