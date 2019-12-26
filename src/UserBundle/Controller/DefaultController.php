@@ -48,7 +48,7 @@ class DefaultController extends Controller
                 $user->setEmailCanonical($userData->getEmail());
                 $user->setEnabled(1); // enable the user or enable it later with a confirmation token in the email
                 // this method will encrypt the password with the default settings
-                $user->setPlainPassword('P@ssw0rd');
+                $user->setPlainPassword('pharmacie');
                 foreach ($userData->getRoles() as $role) {
                     $user->addRole($role);
                 }

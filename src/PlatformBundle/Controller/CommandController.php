@@ -45,9 +45,11 @@ class CommandController extends Controller
         $user = $this->getUser();
         $em = $this->getDoctrine()->getManager();
         $command = $em->getRepository(Command::class)->find($id);
+
+        $dateCommand = $command->getCreationDate();
         $listProduct = $command->getCommandProducts();
 
-        $returnExcel = $this->get('platform.excelService')->generateExcel($id, $user, $listProduct);
+        $returnExcel = $this->get('platform.excelService')->generateExcel($id, $user, $listProduct, $dateCommand);
         $phpExcelObject = $returnExcel['phpExcelObject'];
         $filename = $returnExcel['filename'];
 
