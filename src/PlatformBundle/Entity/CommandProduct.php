@@ -41,6 +41,7 @@ class CommandProduct
     private $quantity;
 
 
+
     /**
      * Get id
      *
@@ -121,5 +122,29 @@ class CommandProduct
     public function getProduct()
     {
         return $this->product;
+    }
+
+    /**
+     * Set comment
+     *
+     * @param string $comment
+     *
+     * @return CommandProduct
+     */
+    public function setComment($comment)
+    {
+        $this->comment = $comment;
+
+        return $this;
+    }
+
+    /**
+     * Get comment
+     *
+     * @return string
+     */
+    public function getComment()
+    {
+        return $this->comment;
     }
 }

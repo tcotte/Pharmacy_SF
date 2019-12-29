@@ -58,6 +58,11 @@ class Command
     private $treat;
 
     /**
+     * @ORM\Column(name="comment", type="text", nullable=true)
+     */
+    private $comment;
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -234,5 +239,29 @@ class Command
     public function getTreatmentDate()
     {
         return $this->treatmentDate;
+    }
+
+    /**
+     * Set comment
+     *
+     * @param string $comment
+     *
+     * @return Command
+     */
+    public function setComment($comment)
+    {
+        $this->comment = $comment;
+
+        return $this;
+    }
+
+    /**
+     * Get comment
+     *
+     * @return string
+     */
+    public function getComment()
+    {
+        return $this->comment;
     }
 }

@@ -58,6 +58,11 @@ class Command
     private $treat;
 
     /**
+     * @ORM\Column(name="comment", type="text", nullable=true)
+     */
+    private $comment;
+
+    /**
      * Constructor
      */
     public function __construct()

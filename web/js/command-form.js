@@ -26,7 +26,7 @@
             "<div class='col-md-11'></div>"
         );
         $('div[id^="platformbundle_command_commandProducts_"] div:nth-child(2)').wrap(
-            "<div class='col-md-1' style='padding-left: 0px; padding-right:40px;'></div>"
+            "<div class='col-md-1' style='padding-left: 0px; padding-right:25px;'></div>"
         );
 
         $('div[id^="platformbundle_command_commandProducts_"] div:nth-child(2)').addClass('number-type');

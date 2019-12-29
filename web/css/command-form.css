@@ -22,3 +22,9 @@ font-weight:bold;
     display: block;
     margin: auto;
 }
+
+label[for=platformbundle_command_comment] {
+    text-decoration: underline;
+}
+
+

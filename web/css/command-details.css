@@ -3,6 +3,7 @@ div.form-inline{
 }
 #excel_button{
     margin-top: 40px;
+    float: right;
 }
 .fa-file-download{
     margin-left:5px;

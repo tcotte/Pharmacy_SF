@@ -47,7 +47,15 @@
         </table>
         <br>
         <b>Prix total de la commande : {{ totalPrice|number_format(2) }} €</b>
-        <br>
+        <br><br>
+
+        <b>Commentaire : </b>
+            {% if command.comment is not null %}
+            {{ command.comment }}
+            {% else %}
+            Aucun commentaire
+            {% endif %}
+
         <a href="{{ path('spreadsheet', {id: command.id}) }}">
             <button class="btn btn-success" id="excel_button">Excel <i class="fas fa-file-download"></i></button>
         </a>
